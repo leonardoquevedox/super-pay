@@ -1,6 +1,6 @@
 {
   "name": "super-pay",
-  "version": "0.1.3",
+  "version": "0.1.9",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
   "scripts": {
@@ -20,8 +20,11 @@
     "url": "https://github.com/vranahub/super-pay.git"
   },
   "dependencies": {
+    "awesome-phonenumber": "^2.2.5",
     "axios": "^0.18.0",
     "colors": "^1.2.1",
+    "js2xml": "^1.0.8",
+    "md5": "^2.2.1",
     "querystring": "^0.2.0",
     "xml-js": "^1.6.2"
   }

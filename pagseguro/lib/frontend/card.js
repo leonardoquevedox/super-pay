@@ -4,12 +4,15 @@
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
+
+/* External Dependencies */
 const querystring = require('querystring');
 const axios = require("axios");
 const moment = require("moment");
 
 let config = require("./config");
 let globals = require("./globals");
+let utils = require("./utils");
 
 const dev_card_brand_url = `${config.images_url}/payment-methods-flags/42x20`;
 

@@ -2,14 +2,12 @@
  * @author @vranahub.
  * @license MIT
  * @version 0.0.5
- * Module for integrating with the Pay U payment service throught Node.js.
  */
-const PhoneNumber = require('awesome-phonenumber');
-const querystring = require("querystring");
-const xmlJS = require("xml-js");
-const Js2Xml = require("js2xml").Js2Xml;
+
+/* External Dependencies */
+const querystring = require('querystring');
 const axios = require("axios");
-const md5 = require("md5");
+
 let config = require("./config");
 
 const Payment = module.exports = {
@@ -26,7 +24,7 @@ const Payment = module.exports = {
                 method: payment.method,
                 total: payment.amount
             };
-            let response = await Backend.pay(data);
+            let response = await axios.post(`${config.server_url}/payment`);
             resolve(response);
         });
     }

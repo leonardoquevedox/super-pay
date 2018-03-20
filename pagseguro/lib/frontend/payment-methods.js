@@ -4,6 +4,8 @@
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
+
+/* External Dependencies */
 const querystring = require('querystring');
 const axios = require("axios");
 

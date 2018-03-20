@@ -149,10 +149,14 @@
  * @property {string} [server_url] Application server address.
  */
 
+/* External Dependencies */
 const colors = require("colors");
+
+/* Internal Adapters */
 let PagSeguro = require("./pagseguro");
 let PayU = require("./pay-u");
 
+/* Module Properties */
 const Gateways = {
     PAG_SEGURO: PagSeguro,
     PAY_U: PayU
@@ -163,7 +167,7 @@ const SUPPORTED_GATEWAYS = {
     PAY_U: "PAY_U"
 };
 
-let init = (settings, layer) => {
+const init = (settings, layer) => {
     try {
         let gateway = Gateways[settings.gateway][layer];
         gateway.init(settings);
@@ -180,6 +184,7 @@ let init = (settings, layer) => {
     }
 };
 
+/* Exports */
 const SuperPay = module.exports = {
     SUPPORTED_GATEWAYS: SUPPORTED_GATEWAYS,
     /**
@@ -187,13 +192,13 @@ const SuperPay = module.exports = {
      * @return {GatewayBackend} Gateway service instance
      */
     Backend: {
-        init: (settings) => this.init(settings, "Backend")
+        init: (settings) => init(settings, "Backend")
     },
     /**
      * @param {GatewayFrontendSettings} settings Gateway specific settings
      * @return {GatewayFrontend} Gateway service instance
      */
     Frontend: {
-        init: (settings) => this.init(settings, "Frontend")
+        init: (settings) => init(settings, "Frontend")
     }
 };

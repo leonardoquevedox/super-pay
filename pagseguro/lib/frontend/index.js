@@ -4,7 +4,7 @@ let SessionFrontend = require('./session');
 let PaymentFrontend = require('./payment');
 let CardFrontend = require('./card');
 
-const Frontend = {
+const Frontend = module.exports = {
     /* SessionFrontend Related Functions */
     session: SessionFrontend,
     /* PaymentFrontend Related Functions */

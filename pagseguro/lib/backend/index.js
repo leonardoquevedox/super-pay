@@ -4,7 +4,7 @@ let SessionBackend = require('./session');
 let PaymentBackend = require('./payment');
 let CardBackend = require('./card');
 
-const Backend = {
+const Backend = module.exports = {
     /* SessionBackend Related Functions */
     session: SessionBackend,
     /* PaymentBackend Related Functions */
