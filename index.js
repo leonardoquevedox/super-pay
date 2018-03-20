@@ -7,7 +7,7 @@
  */
 
 /**
- * @typedef {object} SuperAddress
+ * @typedef {Object} SuperAddress
  * @property {string} street Address street.
  * @property {string} neighbourhood Address neighbourhood.
  * @property {string} city Address city.
@@ -17,20 +17,20 @@
  */
 
 /**
- * @typedef {object} SuperDocument
+ * @typedef {Object} SuperDocument
  * @property {string} type Either "CPF" or "CNPJ".
  * @property {string} number Document number (can be either formatted or not).
  */
 
 /**
- * @typedef {object} SuperCardHolder
+ * @typedef {Object} SuperCardHolder
  * @property {string} name Holder full name.
  * @property {SuperAddress} address Card holder address.
  * @property {SuperDocument} document Card holder document.
  */
 
 /**
- * @typedef {object} SuperBuyer
+ * @typedef {Object} SuperBuyer
  * @property {string} name Buyer full name.
  * @property {SuperAddress} address Buyer address.
  * @property {SuperDocument} document Buyer document.
@@ -38,13 +38,13 @@
 
 
 /**
- * @typedef {object} SuperPaymentInstrument
+ * @typedef {Object} SuperPaymentInstrument
  * @property {SuperCard|SuperCardToken|SuperBoleto} instrument The instrument (credit, debit, boleto) whith which the payment will be processed.
  * @property {SuperHolder} [holder] Card holder.
  */
 
 /**
- * @typedef {object} SuperOrder
+ * @typedef {Object} SuperOrder
  * @property {string} reference Order reference on your database.
  * @property {string} description Order reference on your database.
  * @property {string} currency Order currency code (Three letters).
@@ -53,7 +53,7 @@
  */
 
 /**
- * @typedef {object} SuperPayment
+ * @typedef {Object} SuperPayment
  * @property {string} country Country Code (Two letters).
  * @property {string} reference Payment reference on your database.
  * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
@@ -62,23 +62,23 @@
  */
 
 /**
- * @typedef {object} SuperSession
+ * @typedef {Object} SuperSession
  * @property {string} token Session token.
  */
 
 /**
- * @typedef {object} Session
+ * @typedef {Object} Session
  * @property {Function} create Create Session Token.
  */
 
 
 /**
- * @typedef {object} SuperId
+ * @typedef {Object} SuperId
  * @property {string} id Item id.
  */
 
 /**
- * @typedef {object} SuperCard
+ * @typedef {Object} SuperCard
  * @property {string} payerRef Payer reference on your database.
  * @property {string} reference Card reference on your database.
  * @property {string} holder Card Holder (complete name).
@@ -88,7 +88,7 @@
  */
 
 /**
- * @typedef {object} SuperCardToken
+ * @typedef {Object} SuperCardToken
  * @property {string} payerRef Payer reference on your database.
  * @property {string} reference Card reference on your database.
  * @property {string} holder Card Holder (complete name).
@@ -98,21 +98,21 @@
  */
 
 /**
- * @typedef {object} Payment
- * @property {Function()} list List item.
- * @property {Function(SuperPayment)} create Create item.
- * @property {Function(SuperId)} read Read item.
- * @property {Function(SuperPayment)} update Update item.
- * @property {Function(SuperId)} delete Delete item.
+ * @typedef {Object} Payment
+ * @property {function()} list List item.
+ * @property {function(SuperPayment)} create Create item.
+ * @property {function(SuperId)} read Read item.
+ * @property {function(SuperPayment)} update Update item.
+ * @property {function(SuperId)} delete Delete item.
  */
 
 /**
- * @typedef {object} Card
- * @property {Function(SuperCard)} create Create Session Token.
+ * @typedef {Object} Card
+ * @property {function(SuperCard)} create Create Session Token.
  */
 
 /**
- * @typedef {object} CRUD
+ * @typedef {Object} CRUD
  * @property {Function} [list] List item.
  * @property {Function} [create] Create item.
  * @property {Function} [read] Read item.
@@ -122,7 +122,7 @@
 
 
 /**
- * @typedef {object} GatewayBackend
+ * @typedef {Object} GatewayBackend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {CRUD} subscription Payment Related Functions.
@@ -130,14 +130,14 @@
  */
 
 /**
- * @typedef {object} GatewayBackendSettings
+ * @typedef {Object} GatewayBackendSettings
  * @property {string} [gateway] Gateway name property from SuperPay.SUPPORTED_GATEWAYS.
  * @property {string} [api_token] API Token: Required for most gateways.
  * @property {string} [api_email] API Email: Required for few gateways.
  */
 
 /**
- * @typedef {object} GatewayFrontend
+ * @typedef {Object} GatewayFrontend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {CRUD} subscription Payment Related Functions.
@@ -145,7 +145,7 @@
  */
 
 /**
- * @typedef {object} GatewayFrontendSettings
+ * @typedef {Object} GatewayFrontendSettings
  * @property {string} [server_url] Application server address.
  */
 
@@ -180,8 +180,7 @@ let init = (settings, layer) => {
     }
 };
 
-const SuperPay = {
-
+const SuperPay = module.exports = {
     SUPPORTED_GATEWAYS: SUPPORTED_GATEWAYS,
     /**
      * @param {GatewayBackendSettings} settings Gateway specific settings
@@ -198,5 +197,3 @@ const SuperPay = {
         init: (settings) => this.init(settings, "Frontend")
     }
 };
-
-exports = module.exports = SuperPay;

@@ -1,8 +1,8 @@
 /* Internal Modules */
-let FrontendConfig = require('./lib/backend/config');
-let SessionFrontend = require('./lib/backend/session');
-let PaymentFrontend = require('./lib/backend/payment');
-let CardFrontend = require('./lib/backend/card');
+let FrontendConfig = require('./config');
+let SessionFrontend = require('./session');
+let PaymentFrontend = require('./payment');
+let CardFrontend = require('./card');
 
 const Frontend = {
     /* SessionFrontend Related Functions */

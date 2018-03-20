@@ -1,8 +1,8 @@
 /* Internal Modules */
-let BackendConfig = require('./lib/backend/config');
-let SessionBackend = require('./lib/backend/session');
-let PaymentBackend = require('./lib/backend/payment');
-let CardBackend = require('./lib/backend/card');
+let BackendConfig = require('./config');
+let SessionBackend = require('./session');
+let PaymentBackend = require('./payment');
+let CardBackend = require('./card');
 
 const Backend = {
     /* SessionBackend Related Functions */
