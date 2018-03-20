@@ -1,5 +1,5 @@
 {
-  "name": "@super-pay/backend",
+  "name": "super-pay",
   "version": "0.0.1",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vranahub/super-pay-backend.git"
+    "url": "https://github.com/vranahub/super-pay.git"
   },
   "dependencies": {
     "axios": "^0.18.0",

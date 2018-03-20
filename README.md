@@ -1,2 +1,2 @@
-# super-pay-backend
-Super Pay Node.js
+# super-pay
+Brazillian multi-gateway payment library!
