@@ -147,23 +147,25 @@ const SuperPay = module.exports = {
         PAG_SEGURO: "PAG_SEGURO",
         PAY_U: "PAY_U"
     },
-    /**
-     * @param {GatewaySettings} settings Gateway specific settings
-     * @return {Gateway} Gateway service instance
-     */
-    init: (settings) => {
-        try {
-            let gateway = Gateways[settings.gateway];
-            gateway.init(settings);
-            return gateway;
-        } catch (e) {
-            console.log("Hi! This is SuperPay to Major Tom:".bold.red);
-            console.log("ERROR: It seems that you've chosen an unsupported payment gateway.".bold.red);
-            /* console.log("Exception message for searching purposes:")*/
-            console.log(`${e}`.bold.red);
-            console.log("Please, use of the values below:".green);
-            for (var gateway in SuperPay.SUPPORTED_GATEWAYS) {
-                console.log(`- SuperPay.SUPPORTED_GATEWAYS.${gateway}`.green);
+    Backend: {
+        /**
+         * @param {GatewaySettings} settings Gateway specific settings
+         * @return {Gateway} Gateway service instance
+         */
+        init: (settings) => {
+            try {
+                let gateway = Gateways[settings.gateway];
+                gateway.init(settings);
+                return gateway;
+            } catch (e) {
+                console.log("Hi! This is SuperPay to Major Tom:".bold.red);
+                console.log("ERROR: It seems that you've chosen an unsupported payment gateway.".bold.red);
+                /* console.log("Exception message for searching purposes:")*/
+                console.log(`${e}`.bold.red);
+                console.log("Please, use of the values below:".green);
+                for (var gateway in SuperPay.SUPPORTED_GATEWAYS) {
+                    console.log(`- SuperPay.SUPPORTED_GATEWAYS.${gateway}`.green);
+                }
             }
         }
     }
