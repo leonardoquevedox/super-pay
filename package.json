@@ -1,0 +1,28 @@
+{
+  "name": "@super-pay/backend",
+  "version": "0.0.1",
+  "description": "Brazillian multi-gateway payment library!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pagseguro",
+    "pay-u",
+    "payment",
+    "gateway",
+    "brazil"
+  ],
+  "author": "vranahub",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vranahub/super-pay-backend.git"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "colors": "^1.2.1",
+    "querystring": "^0.2.0",
+    "xml-js": "^1.6.2"
+  }
+}
