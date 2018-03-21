@@ -1,0 +1,4 @@
+let Frontend = {};
+export {
+    Frontend
+};
