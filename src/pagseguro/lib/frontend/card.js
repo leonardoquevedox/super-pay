@@ -23,7 +23,7 @@ let formatCardNumber = (cardNumber) => {
 
 let initExpirationDates = () => {
     for (let month = 1; month <= 12; month++) {
-        Globals.cardExpirationMonths.push(utils.pad(month));
+        Globals.cardExpirationMonths.push(Utils.pad(month));
     }
     for (let year = 0; year <= 30; year++) {
         Globals.cardExpirationYears.push(moment().add(year, "years").format("YYYY"));

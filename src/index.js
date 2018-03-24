@@ -3,7 +3,6 @@
  * @license MIT
  * @version 0.0.5
  * @module SuperPay
- * Latin American Multi-gateway integration module for Node.js.
  */
 
 /**
@@ -150,19 +149,20 @@
  */
 
 /* External Dependencies */
-import * as colors from "colors";
+import chalk from "chalk";
 
 /* Internal Adapters */
 import PagSeguro from "./pagseguro";
 
 
 /* Module Properties */
+let log = console.log;
 let Gateways = {
     PAG_SEGURO: PagSeguro,
     // PAY_U: PayU
 };
 
-console.log(Gateways);
+log(Gateways);
 
 let SUPPORTED_GATEWAYS = {
     PAG_SEGURO: "PAG_SEGURO",
@@ -175,13 +175,13 @@ let init = (settings, layer) => {
         gateway.init(settings);
         return gateway;
     } catch (e) {
-        console.log("Hi! This is SuperPay to Major Tom:".bold.red);
-        console.log("ERROR: It seems that you've chosen an unsupported payment gateway.".bold.red);
-        /* console.log("Exception message for searching purposes:")*/
-        console.log(`${e}`.bold.red);
-        console.log("Please, use of the values below:".green);
+        log(chalk.redBright("Hi! This is SuperPay to Major Tom:"));
+        log(chalk.redBright("ERROR: It seems that you've chosen an unsupported payment gateway."));
+        /* log("Exception message for searching purposes:")*/
+        log(chalk.redBright(`${e}`));
+        log(chalk.greenBright("Please, use of the values below:"));
         for (var gateway in SuperPay.SUPPORTED_GATEWAYS) {
-            console.log(`- SuperPay.SUPPORTED_GATEWAYS.${gateway}`.green);
+            log(chalk.greenBright(`- SuperPay.SUPPORTED_GATEWAYS.${gateway}`));
         }
     }
 };
