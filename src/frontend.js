@@ -1,4 +1,0 @@
-let Frontend = {};
-export {
-    Frontend
-};

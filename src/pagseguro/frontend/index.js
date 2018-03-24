@@ -1,4 +1,7 @@
-/* Internal Modules */
+/* SuperPay General Modules */
+let Utils = require("../../utils/general.utils");
+
+/* Gateway Specific Modules */
 let Config = require("./config");
 let Session = require("./session");
 let Payment = require("./payment");
@@ -15,10 +18,13 @@ let Frontend = module.exports = {
     card: Card,
     /* Initialization function */
     init: async (options) => {
-        options = options || {};
-        config = Config.init(options);
-        await Session.init(options);
-        Payment.init(options);
-        Card.init(options);
+        return new Promise(async (resolve, reject) => {
+            options = options || {};
+            config = Config.init(options);
+            await Utils.loadLib(config.lib_url);
+            await Session.init(options);
+            Payment.init(options);
+            Card.init(options);
+        });
     }
 };

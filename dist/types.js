@@ -1,7 +1,4 @@
-# SuperPay.js
-Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
-
-```/**
+/**
  * @typedef {Object} SuperAddress
  * @property {string} street Address street.
  * @property {string} neighbourhood Address neighbourhood.
@@ -31,11 +28,10 @@ Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
  * @property {SuperDocument} document Buyer document.
  */
 
-
 /**
  * @typedef {Object} SuperPaymentInstrument
- * @property {SuperCard|SuperCardToken|SuperBoleto} instrument The instrument (credit, debit, boleto) whith which the payment will be processed.
- * @property {SuperHolder} [holder] Card holder.
+ * @property {SuperCard|SuperCardToken} instrument The instrument (credit, debit, boleto) whith which the payment will be processed.
+ * @property {SuperCardHolder} [holder] Card holder.
  */
 
 /**
@@ -66,7 +62,6 @@ Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
  * @property {Function} create Create Session Token.
  */
 
-
 /**
  * @typedef {Object} SuperId
  * @property {string} id Item id.
@@ -93,12 +88,24 @@ Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
  */
 
 /**
+ * @typedef {Function} List
+ * @param {string} foo aosd
+ */
+
+/**
  * @typedef {Object} Payment
- * @property {function()} list List item.
+ * @property {List} list List item.
  * @property {function(SuperPayment)} create Create item.
  * @property {function(SuperId)} read Read item.
  * @property {function(SuperPayment)} update Update item.
  * @property {function(SuperId)} delete Delete item.
+ */
+
+/** 
+ * @function 
+ * @name Payment#create
+ * @param {SuperPayment} payment 
+ * @return {SuperPayment}
  */
 
 /**
@@ -115,7 +122,6 @@ Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
  * @property {Function} [delete] Delete item.
  */
 
-
 /**
  * @typedef {Object} GatewayBackend
  * @property {Card} card Card Related Functions.
@@ -125,21 +131,9 @@ Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
  */
 
 /**
- * @typedef {Object} GatewayBackendSettings
- * @property {string} [gateway] Gateway name property from SuperPay.SUPPORTED_GATEWAYS.
- * @property {string} [api_token] API Token: Required for most gateways.
- * @property {string} [api_email] API Email: Required for few gateways.
- */
-
-/**
  * @typedef {Object} GatewayFrontend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {CRUD} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
-
-/**
- * @typedef {Object} GatewayFrontendSettings
- * @property {string} [server_url] Application server address.
- */```

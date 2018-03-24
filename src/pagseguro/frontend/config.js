@@ -1,3 +1,4 @@
+
 /**
  * @author @vranahub.
  * @license MIT
@@ -16,6 +17,12 @@ let prod_files_url = "https://stc.pagseguro.uol.com.br";
 let prod_images_url = `${prod_files_url}/public/img`;
 
 let Config = module.exports = {
+    /** 
+     * @function 
+     * @param {string} [server_url] Application server url
+     * 
+     * @returns {object} config
+     * */
     init: (options) => {
         // Avoiding exceptions...
         options = options || {};
