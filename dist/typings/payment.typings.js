@@ -1,13 +1,13 @@
 /**
  * @typedef {Object} SuperPayment
  * @property {SuperCard|SuperCardToken} instrument Payment instrument.
- * @property {SuperOrder} order Order information.
- * @property {string} country Country Code (Two letters).
- * @property {string} currency Order currency code (Three letters).
  * @property {string} amount Order currency code (Three letters).
  * @property {string} reference Payment reference on your database.
  * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
  * @property {string} method The method (credit, debit, boleto) with which the payment will be processed.
+ * @property {SuperOrder} [order] Order information.
+ * @property {string} [country] Country Code (Two letters).
+ * @property {string} [currency] Order currency code (Three letters).
  * @property {string} [ip] Buyer IP address.
  */
 

@@ -4,12 +4,12 @@
  * @version 0.0.5
  */
 
-const chalk = require("chalk");
-const log = console.log;
+let chalk = require("chalk");
+let log = console.log;
 
-const PagSeguro = require("./pagseguro");
+let PagSeguro = require("./pagseguro");
 
-const init = (gateway, settings, layer) => {
+let init = (gateway, settings, layer) => {
     try {
         let instance = gateway[layer];
         instance.init(settings);
@@ -44,7 +44,7 @@ let SuperPay = {
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.api_token] Gateway specific settings
      * @param {string} [settings.api_email] Gateway specific settings
-     * @return {GatewayFrontend} Gateway service instance
+     * @return {GatewayBackend} Gateway service instance
      * @memberof SuperPay
      */
     Backend: (settings) => init(settings.gateway, settings, "Backend"),
@@ -53,7 +53,7 @@ let SuperPay = {
      * @param {object} settings Gateway specific settings
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.server_url] Gateway specific settings
-     * @return {GatewayBackend} Gateway service instance
+     * @return {GatewayFrontend} Gateway service instance
      * @memberof SuperPay
      */
     Frontend: (settings) => init(settings.gateway, settings, "Frontend")

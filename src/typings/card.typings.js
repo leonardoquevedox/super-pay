@@ -7,8 +7,8 @@
 
 /**
  * @typedef {Object} SuperCard
- * @property {SuperCardHolder} holder Card Holder (complete name).
- * @property {string} payerRef Payer reference on your database.
+ * @property {SuperCardHolder} [holder] Card Holder.
+ * @property {string} [payerRef] Payer reference on your database.
  * @property {string} reference Card reference on your database.
  * @property {string} brand Card brand.
  * @property {string} number Card number.
@@ -29,8 +29,8 @@
  */
 
 /**
- * @typedef {Function} GetCardInfo
- * @param {string} cardNumber Card information.
+ * @typedef {Function} GetCardBrand
+ * @param {string} number Card information.
  * @returns {Object} Created card information.
  */
 
@@ -43,6 +43,6 @@
 /**
  * @typedef {Object} Card
  * @property {CardExpirationOptoins} expirationOptions Card expiration years and months (generated at runtime).
+ * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
- * @property {GetCardInfo} getInfo Get Card Info Based On Number.
  */

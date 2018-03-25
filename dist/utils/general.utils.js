@@ -1,6 +1,6 @@
 let Promise = require("bluebird");
 
-const Utils = module.exports = {
+let Utils = module.exports = {
     loadLib: url => {
         return new Promise((resolve, reject) => {
             let isFirstLoad = false;

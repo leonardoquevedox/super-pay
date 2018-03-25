@@ -1,10 +1,16 @@
+/* External Dependencies */
+let moment = require("moment");
 let Promise = require("bluebird");
-let CardInfo = require("card-info");
+let CardInfo = require("@polvo-labs/card-type");
 
-const CardUtils = module.exports = {
-    getInfo: async (cardNumber) => {
+/* Internal Modules */
+let Utils = require("../utils/utils");
+
+let CardUtils = module.exports = {
+    getBrand: async (cardNumber) => {
         return new Promise((resolve, reject) => {
-            resolve(new CardInfo(cardNumber));
+            let brand = CardInfo.cardType(cardNumber);
+            resolve(brand);
         });
     },
     initExpirationDates: (expiration) => {

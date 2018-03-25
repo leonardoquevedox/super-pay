@@ -15,7 +15,6 @@ let moment = require("moment");
 let Config = require("./config");
 let Globals = require("./globals");
 let Utils = require("./utils");
-let CardUtils = require("../../../utils/card.utils");
 
 let config = {};
 

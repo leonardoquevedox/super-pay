@@ -5,10 +5,10 @@
  * Module for integrating with the Pay U payment service throught Node.js.
  */
 
-const Frontend = require("./lib/frontend");
-const Backend = require("./lib/backend");
+let Frontend = require("./frontend");
+let Backend = require("./backend");
 
-const PagSeguro = module.exports = {
+let PagSeguro = module.exports = {
     Frontend: Frontend,
     Backend: Backend
 };

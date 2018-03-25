@@ -3,7 +3,7 @@
  * @license MIT
  * @version 0.0.5
  */
-export const chalk: any;
+export var chalk: any;
 
 /**
  * @class SuperPay
@@ -26,20 +26,20 @@ export class SuperPay {
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.api_token] Gateway specific settings
     * @param {string} [settings.api_email] Gateway specific settings
-    * @return {GatewayFrontend} Gateway service instance
+    * @return {GatewayBackend} Gateway service instance
     * @memberof SuperPay
     */
-   static Backend(settings: { gateway: string, api_token?: string, api_email?: string }): GatewayFrontend;
+   static Backend(settings: { gateway: string, api_token?: string, api_email?: string }): GatewayBackend;
 
    /**
     * @function
     * @param {object} settings Gateway specific settings
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.server_url] Gateway specific settings
-    * @return {GatewayBackend} Gateway service instance
+    * @return {GatewayFrontend} Gateway service instance
     * @memberof SuperPay
     */
-   static Frontend(settings: { gateway: string, server_url?: string }): GatewayBackend;
+   static Frontend(settings: { gateway: string, server_url?: string }): GatewayFrontend;
 
 }
 
@@ -73,7 +73,7 @@ export var Promise: any;
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
-export const Frontend: any;
+export var Frontend: any;
 
 /**
  * @typedef {Object} SuperCardHolder
@@ -90,8 +90,8 @@ export interface SuperCardHolder {
 
 /**
  * @typedef {Object} SuperCard
- * @property {SuperCardHolder} holder Card Holder (complete name).
- * @property {string} payerRef Payer reference on your database.
+ * @property {SuperCardHolder} [holder] Card Holder.
+ * @property {string} [payerRef] Payer reference on your database.
  * @property {string} reference Card reference on your database.
  * @property {string} brand Card brand.
  * @property {string} number Card number.
@@ -99,8 +99,8 @@ export interface SuperCardHolder {
  * @property {Date} expirationDate Card Expiration Date.
  */
 export interface SuperCard {
-   holder: SuperCardHolder;
-   payerRef: string;
+   holder?: SuperCardHolder;
+   payerRef?: string;
    reference: string;
    brand: string;
    number: string;
@@ -126,11 +126,11 @@ export interface SuperCardToken {
 type CreateCard = (card: SuperCard) => SuperCard;
 
 /**
- * @typedef {Function} GetCardInfo
- * @param {string} cardNumber Card information.
+ * @typedef {Function} GetCardBrand
+ * @param {string} number Card information.
  * @returns {Object} Created card information.
  */
-type GetCardInfo = (cardNumber: string) => Object;
+type GetCardBrand = (number: string) => Object;
 
 /**
  * @typedef {Object} CardExpirationOptoins
@@ -146,13 +146,13 @@ export interface CardExpirationOptoins {
 /**
  * @typedef {Object} Card
  * @property {CardExpirationOptoins} expirationOptions Card expiration years and months (generated at runtime).
+ * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
- * @property {GetCardInfo} getInfo Get Card Info Based On Number.
  */
 export interface Card {
    expirationOptions: CardExpirationOptoins;
+   getBrand: GetCardBrand;
    create: CreateCard;
-   getInfo: GetCardInfo;
 }
 
 
@@ -199,11 +199,11 @@ type DeleteItem = (id: SuperId) => boolean;
  * @property {DeleteItem} [delete] Delete item.
  */
 export interface CRUD {
-   list: ListItems;
-   create: CreateItem;
-   read: ReadItem;
-   update: UpdateItem;
-   delete: DeleteItem;
+   list?: ListItems;
+   create?: CreateItem;
+   read?: ReadItem;
+   update?: UpdateItem;
+   delete?: DeleteItem;
 }
 
 
@@ -218,7 +218,7 @@ export interface GatewayBackend {
    card: Card;
    payment: Payment;
    subscription: CRUD;
-   session: Session;
+   session?: Session;
 }
 
 
@@ -233,7 +233,7 @@ export interface GatewayFrontend {
    card: Card;
    payment: Payment;
    subscription: CRUD;
-   session: Session;
+   session?: Session;
 }
 
 
@@ -307,25 +307,25 @@ export interface SuperOrder {
 /**
  * @typedef {Object} SuperPayment
  * @property {SuperCard|SuperCardToken} instrument Payment instrument.
- * @property {SuperOrder} order Order information.
- * @property {string} country Country Code (Two letters).
- * @property {string} currency Order currency code (Three letters).
  * @property {string} amount Order currency code (Three letters).
  * @property {string} reference Payment reference on your database.
  * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
  * @property {string} method The method (credit, debit, boleto) with which the payment will be processed.
+ * @property {SuperOrder} [order] Order information.
+ * @property {string} [country] Country Code (Two letters).
+ * @property {string} [currency] Order currency code (Three letters).
  * @property {string} [ip] Buyer IP address.
  */
 export interface SuperPayment {
    instrument: (SuperCard|SuperCardToken);
-   order: SuperOrder;
-   country: string;
-   currency: string;
    amount: string;
    reference: string;
    notificationURL: string;
    method: string;
-   ip: string;
+   order?: SuperOrder;
+   country?: string;
+   currency?: string;
+   ip?: string;
 }
 
 

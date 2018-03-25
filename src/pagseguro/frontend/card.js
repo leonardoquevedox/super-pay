@@ -17,10 +17,11 @@ let CardUtils = require("../../utils/card.utils");
 let formatCardNumber = (cardNumber) => {
     return cardNumber.replace(/ /g, "");
 };
-/* const dev_card_brand_url = `${config.images_url}/payment-methods-flags/42x20`; */
+/* let dev_card_brand_url = `${config.images_url}/payment-methods-flags/42x20`; */
 
-const config = {};
-const Card = module.exports = {
+let config = {};
+
+let Card = module.exports = {
     /** 
      * @property {Object} expirationOptions
      */
@@ -29,9 +30,9 @@ const Card = module.exports = {
         months: []
     },
     init: (options) => {
-        config = Config.init(options);
-        CardUtils.initExpirationDates();
-        return this;
+        config = Config.init(options); // Initialize module.
+        CardUtils.initExpirationDates(Card.expirationOptions); // Initialize expiration years and months.
+        return this; // Returns the module.
     },
     create: async (card) => {
         return new Promise((resolve, reject) => {
@@ -50,16 +51,8 @@ const Card = module.exports = {
             });
         });
     },
-    getInfo: async (cardNumber) => {
-        let info = await CardUtils.getInfo(cardNumber);
-        return info;
-    },
-    /*getBrandName: (cardBrand) => {
-        let paymentMethodsIsDefined = typeof Globals.paymentMethods !== "undefined";
-        if (!paymentMethodsIsDefined || !cardBrand) console.warn("SuperPay.js to Major Tom: Whoops! Please, make sure you init the payment methods before calling this function ;)");
-        else return (Globals.paymentMethods && cardBrand) ? Globals.paymentMethods.CREDIT_CARD.options[cardBrand.name.toUpperCase()].displayName : ";
-    },
-    getCardImage: (cardBrand) => {
-        return `${this.CARD_BRAND_URL}/${cardBrand}.png`;
-    }, */
+    getBrand: async (cardNumber) => {
+        let brand = await CardUtils.getBrand(cardNumber);
+        return brand;
+    }
 };

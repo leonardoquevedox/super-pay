@@ -1,4 +1,3 @@
-import _Promise from "bluebird";
 /* SuperPay General Modules */
 let Utils = require("../../utils/general.utils");
 
@@ -19,7 +18,7 @@ let Frontend = module.exports = {
     card: Card,
     /* Initialization function */
     init: async options => {
-        return new _Promise(async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             options = options || {};
             config = Config.init(options);
             await Utils.loadLib(config.lib_url);

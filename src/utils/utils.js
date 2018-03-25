@@ -1,6 +1,6 @@
 let Promise = require("bluebird");
 
-const Utils = module.exports = {
+let Utils = module.exports = {
     loadLib: (url) => {
         return new Promise((resolve, reject) => {
             let isFirstLoad = false;
@@ -35,6 +35,6 @@ const Utils = module.exports = {
         });
     },
     pad: (number) => {
-        return (d < 10) ? '0' + d.toString() : d.toString();
+        return (number < 10) ? '0' + number.toString() : number.toString();
     }
 }
