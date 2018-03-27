@@ -18,3 +18,4 @@
  * @typedef {Object} SuperId
  * @property {string} id Item id.
  */
+"use strict";

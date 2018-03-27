@@ -22,7 +22,6 @@ let Session = module.exports = {
     init: async (options) => {
         config = Config.init(options);
         this.token = await this.create();
-        console.log(this.token);
         return this;
     },
     create: () => {

@@ -12,3 +12,4 @@
  * @property {Array<object>} items Order currency code (Three letters).
  * @property {SuperBuyer} buyer Order buyer.
  */
+"use strict";

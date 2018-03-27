@@ -1,4 +1,4 @@
-var _this = this;
+"use strict";
 
 /**
  * @author @vranahub.
@@ -23,14 +23,14 @@ let Config = module.exports = {
 
         // Setting up credentials...
         if (!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_email option ;)");
-        _this.api_email = options.api_email; // Merchant Login E-mail
+        undefined.api_email = options.api_email; // Merchant Login E-mail
         if (!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_token option ;)");
-        _this.api_token = options.api_token; // Merchant API Token
+        undefined.api_token = options.api_token; // Merchant API Token
 
         // Selecting the environment...
-        _this.development = options.development || true; // Reports URL
-        _this.payments_url = _this.development ? dev_payments_url : prod_payments_url; // Payments URL
-        _this.subscriptions_url = _this.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
-        return _this;
+        undefined.development = options.development || true; // Reports URL
+        undefined.payments_url = undefined.development ? dev_payments_url : prod_payments_url; // Payments URL
+        undefined.subscriptions_url = undefined.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
+        return undefined;
     }
 };

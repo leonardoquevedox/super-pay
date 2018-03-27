@@ -50,3 +50,4 @@
  * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
  */
+"use strict";

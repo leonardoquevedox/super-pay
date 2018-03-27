@@ -35,3 +35,4 @@
  * @property {UpdateItem} [update] Update item.
  * @property {DeleteItem} [delete] Delete item.
  */
+"use strict";

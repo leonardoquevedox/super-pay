@@ -1,3 +1,5 @@
+"use strict";
+
 let FrontendUtils = module.exports = {
     libHasLoaded: () => {
         let hasLoaded = typeof window.PagSeguroDirectPayment !== "undefined";

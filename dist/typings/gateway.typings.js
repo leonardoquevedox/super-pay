@@ -13,3 +13,4 @@
  * @property {CRUD} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
+"use strict";

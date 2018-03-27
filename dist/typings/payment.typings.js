@@ -55,3 +55,4 @@
  * @property {UpdatePayment} update Update payment.
  * @property {DeletePayment} delete Delete payment.
  */
+"use strict";

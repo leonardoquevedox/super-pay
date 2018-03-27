@@ -1,4 +1,4 @@
-var _this = this;
+"use strict";
 
 /**
  * @author @vranahub.
@@ -29,13 +29,13 @@ let Config = module.exports = {
         options = options || {};
 
         // Selecting the environment...
-        _this.development = options.development ? options.development : true; // Reports URL
-        _this.server_url = options.server_url; // Application Server
-        _this.session_url = options.session_url; // Application Server
-        _this.lib_url = options.development ? dev_lib_url : prod_lib_url; // Library URL
-        _this.files_url = options.development ? dev_files_url : prod_files_url; // Files URL
-        _this.images_url = options.development ? dev_images_url : prod_images_url; // Images URL
+        undefined.development = options.development ? options.development : true; // Reports URL
+        undefined.server_url = options.server_url; // Application Server
+        undefined.session_url = options.session_url; // Application Server
+        undefined.lib_url = options.development ? dev_lib_url : prod_lib_url; // Library URL
+        undefined.files_url = options.development ? dev_files_url : prod_files_url; // Files URL
+        undefined.images_url = options.development ? dev_images_url : prod_images_url; // Images URL
 
-        return _this;
+        return undefined;
     }
 };

@@ -12,3 +12,4 @@
  * @typedef {Object} Session
  * @property {CreateSession} create Create Session Token.
  */
+"use strict";

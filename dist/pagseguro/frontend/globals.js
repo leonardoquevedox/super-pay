@@ -1,3 +1,5 @@
+"use strict";
+
 let Globals = module.exports = {
     senderHash: "",
     sessionToken: "",

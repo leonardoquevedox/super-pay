@@ -1,4 +1,6 @@
-var _this = this;
+"use strict";
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
  * @author @vranahub.
@@ -26,30 +28,48 @@ let config = {};
 let Card = module.exports = {
     init: options => {
         config = Config.init(options); // Initialize module.
-        return _this; // Returns the module.
+        return undefined; // Returns the module.
     },
-    create: async card => {
-        return new Promise((resolve, reject) => {
-            PagSeguroDirectPayment.createCardToken({
-                cardNumber: formatCardNumber(card.cardNumber),
-                brand: card.brand,
-                cvv: card.cvv,
-                expirationMonth: card.expirationMonth,
-                expirationYear: card.expirationYear,
-                success: response => {
-                    resolve(response.card.token);
-                },
-                error: error => {
-                    reject(error);
-                }
+    create: (() => {
+        var _ref = _asyncToGenerator(function* (card) {
+            return new Promise(function (resolve, reject) {
+                PagSeguroDirectPayment.createCardToken({
+                    cardNumber: formatCardNumber(card.cardNumber),
+                    brand: card.brand,
+                    cvv: card.cvv,
+                    expirationMonth: card.expirationMonth,
+                    expirationYear: card.expirationYear,
+                    success: function (response) {
+                        resolve(response.card.token);
+                    },
+                    error: function (error) {
+                        reject(error);
+                    }
+                });
             });
         });
-    },
-    getExpirationOptions: async () => {
-        return CardUtils.initExpirationDates();
-    },
-    getBrand: async cardNumber => {
-        let brand = await CardUtils.getBrand(cardNumber);
-        return brand;
-    }
+
+        return function create(_x) {
+            return _ref.apply(this, arguments);
+        };
+    })(),
+    getExpirationOptions: (() => {
+        var _ref2 = _asyncToGenerator(function* () {
+            return CardUtils.initExpirationDates();
+        });
+
+        return function getExpirationOptions() {
+            return _ref2.apply(this, arguments);
+        };
+    })(),
+    getBrand: (() => {
+        var _ref3 = _asyncToGenerator(function* (cardNumber) {
+            let brand = yield CardUtils.getBrand(cardNumber);
+            return brand;
+        });
+
+        return function getBrand(_x2) {
+            return _ref3.apply(this, arguments);
+        };
+    })()
 };

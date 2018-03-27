@@ -1,4 +1,6 @@
-var _this = this;
+"use strict";
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
  * @author @vranahub.
@@ -21,20 +23,26 @@ let config = {};
 let Payment = module.exports = {
     init: options => {
         config = Config.init(options);
-        return _this;
+        return undefined;
     },
     create(payment) {
-        return new Promise(async (resolve, reject) => {
-            let data = {
-                hash: PagSeguroDirectPayment.getSenderHash(),
-                items: payment.items,
-                token: payment.creditCard.token,
-                method: payment.method,
-                total: payment.amount
+        return new Promise((() => {
+            var _ref = _asyncToGenerator(function* (resolve, reject) {
+                let data = {
+                    hash: PagSeguroDirectPayment.getSenderHash(),
+                    items: payment.items,
+                    token: payment.creditCard.token,
+                    method: payment.method,
+                    total: payment.amount
+                };
+                let response = yield axios.post(`${config.server_url}/payment`);
+                resolve(response);
+            });
+
+            return function (_x, _x2) {
+                return _ref.apply(this, arguments);
             };
-            let response = await axios.post(`${config.server_url}/payment`);
-            resolve(response);
-        });
+        })());
     },
     getPaymentMethods(amount) {
         return new Promise((resolve, reject) => {
