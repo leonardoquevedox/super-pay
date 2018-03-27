@@ -18,8 +18,11 @@ let Utils = require("./utils");
 let config = {};
 
 let Session = module.exports = {
-    init: (options) => {
+    token: "",
+    init: async (options) => {
         config = Config.init(options);
+        this.token = await this.create();
+        console.log(this.token);
         return this;
     },
     create: () => {

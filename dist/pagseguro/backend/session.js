@@ -8,6 +8,7 @@ var _this = this;
  */
 let querystring = require('querystring');
 let axios = require("axios");
+let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 
 let Config = require("./config");
@@ -20,14 +21,19 @@ let Session = module.exports = {
     },
     create: () => {
         return new Promise(async (resolve, reject) => {
-            let session_token_url = `${config.checkout_url}/sessions/`;
-            let credentials = {
-                email: config.api_email,
-                token: config.api_token
-            };
-            let url = session_token_url + "?" + querystring.stringify(credentials);
-            let response = (await axios.post(url)).data;
-            resolve(token);
+            try {
+                let session_token_url = `${config.payments_url}/sessions`;
+                let credentials = {
+                    email: config.api_email,
+                    token: config.api_token
+                };
+                let url = session_token_url + `?${querystring.stringify(credentials)}`;
+                let response = (await axios.post(url)).data;
+                let token = xmlJS.xml2js(response, { compact: true }).session.id._text;
+                resolve(token);
+            } catch (e) {
+                console.warn(e.message);
+            }
         });
     }
 };

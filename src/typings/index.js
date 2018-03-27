@@ -1,12 +1,12 @@
-    /**
-     * @typedef {Object} SuperAddress
-     * @property {string} street Address street.
-     * @property {string} neighbourhood Address neighbourhood.
-     * @property {string} city Address city.
-     * @property {string} state Address state (Two letter code).
-     * @property {string} country Address country (Two letter code).
-     * @property {string} postalCode Address postal code.
-     */
+/**
+ * @typedef {Object} SuperAddress
+ * @property {string} street Address street.
+ * @property {string} neighbourhood Address neighbourhood.
+ * @property {string} city Address city.
+ * @property {string} state Address state (Two letter code).
+ * @property {string} country Address country (Two letter code).
+ * @property {string} postalCode Address postal code.
+ */
 
 /**
  * @typedef {Object} SuperDocument

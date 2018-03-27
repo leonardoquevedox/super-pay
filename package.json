@@ -1,6 +1,6 @@
 {
   "name": "super-pay",
-  "version": "0.9.9-dev-017",
+  "version": "0.9.9-dev-033",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,8 @@
     "jslint": "^0.12.0",
     "md5": "^2.2.1",
     "moment": "^2.21.0",
-    "querystring": "^0.2.0"
+    "querystring": "^0.2.0",
+    "xml-js": "^1.6.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -1,5 +1,6 @@
 # SuperPay.js
-Brazillian multi-gateway payment library!  [IN DEVELOPMENT]
+ [IN DEVELOPMENT] [NOT RELATED TO SUPERPAY.ME IN ANY WAY] 
+ Brazillian multi-gateway payment library! 
 
 ```/**
  * @typedef {Object} SuperAddress
