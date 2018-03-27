@@ -13,12 +13,19 @@ let CardUtils = module.exports = {
             resolve(brand);
         });
     },
-    initExpirationDates: (expiration) => {
-        for (let month = 1; month <= 12; month++) {
-            expiration.months.push(Utils.pad(month));
-        }
-        for (let year = 0; year <= 30; year++) {
-            expiration.years.push(moment().add(year, "years").format("YYYY"));
-        }
+    initExpirationDates: async () => {
+        return new Promise((resolve, reject) => {
+            let expiration = {
+                months: [],
+                years: []
+            };
+            for (let month = 1; month <= 12; month++) {
+                expiration.months.push(Utils.pad(month));
+            }
+            for (let year = 0; year <= 30; year++) {
+                expiration.years.push(moment().add(year, "years").format("YYYY"));
+            }
+            resolve(expiration);
+        });
     }
 }

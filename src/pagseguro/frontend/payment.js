@@ -34,7 +34,7 @@ let Payment = module.exports = {
             resolve(response);
         });
     },
-    listMethods(amount) {
+    getPaymentMethods(amount) {
         return new Promise((resolve, reject) => {
             PagSeguroDirectPayment.getPaymentMethods({
                 amount: amount,

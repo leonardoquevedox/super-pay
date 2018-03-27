@@ -36,6 +36,6 @@ let Utils = module.exports = {
         });
     },
     pad: number => {
-        return d < 10 ? '0' + d.toString() : d.toString();
+        return number < 10 ? '0' + number.toString() : number.toString();
     }
 };

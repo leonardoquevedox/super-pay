@@ -34,14 +34,19 @@
  */
 
 /**
- * @typedef {Object} CardExpirationOptoins
+ * @typedef {Object} CardExpirationOptions
  * @property {Array<string>} months Expiration months.
  * @property {Array<string>} years Expiration years.
  */
 
 /**
+* @typedef {Function} GetExpirationOptions
+* @returns {CardExpirationOptions} months Expiration months.
+*/
+
+/**
  * @typedef {Object} Card
- * @property {CardExpirationOptoins} expirationOptions Card expiration years and months (generated at runtime).
+ * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
  * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
  */

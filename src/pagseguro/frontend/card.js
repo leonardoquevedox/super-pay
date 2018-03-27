@@ -22,16 +22,8 @@ let formatCardNumber = (cardNumber) => {
 let config = {};
 
 let Card = module.exports = {
-    /** 
-     * @property {Object} expirationOptions
-     */
-    expirationOptions: {
-        years: [],
-        months: []
-    },
     init: (options) => {
         config = Config.init(options); // Initialize module.
-        CardUtils.initExpirationDates(Card.expirationOptions); // Initialize expiration years and months.
         return this; // Returns the module.
     },
     create: async (card) => {
@@ -50,6 +42,9 @@ let Card = module.exports = {
                 }
             });
         });
+    },
+    getExpirationOptions: async () => {
+        return CardUtils.initExpirationDates();
     },
     getBrand: async (cardNumber) => {
         let brand = await CardUtils.getBrand(cardNumber);

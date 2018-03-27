@@ -1,5 +1,5 @@
 /* SuperPay General Modules */
-let Utils = require("../../utils/general.utils");
+let Utils = require("../../utils/utils");
 
 /* Gateway Specific Modules */
 let Config = require("./config");
