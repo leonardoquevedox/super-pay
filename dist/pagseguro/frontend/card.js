@@ -28,11 +28,12 @@ let config = {};
 let Card = module.exports = {
     init: options => {
         config = Config.init(options); // Initialize module.
-        return undefined; // Returns the module.
+        return Card; // Returns the module.
     },
     create: (() => {
         var _ref = _asyncToGenerator(function* (card) {
             return new Promise(function (resolve, reject) {
+                if (card.brand) card.brand = card.brand.toLowerCase();
                 PagSeguroDirectPayment.createCardToken({
                     cardNumber: formatCardNumber(card.cardNumber),
                     brand: card.brand,

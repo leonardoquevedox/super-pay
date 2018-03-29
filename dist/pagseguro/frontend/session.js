@@ -26,8 +26,9 @@ let Session = module.exports = {
     init: (() => {
         var _ref = _asyncToGenerator(function* (options) {
             config = Config.init(options);
-            undefined.token = yield undefined.create();
-            return undefined;
+            let token = yield Session.create();
+            PagSeguroDirectPayment.setSessionId(token);
+            return Session;
         });
 
         return function init(_x) {

@@ -19,7 +19,7 @@ let config = {};
 let Session = module.exports = {
     init: options => {
         config = Config.init(options);
-        return undefined;
+        return Session;
     },
     create: () => {
         return new Promise((() => {

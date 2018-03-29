@@ -16,7 +16,7 @@ let config = {};
 let Payment = module.exports = {
     init: (options) => {
         config = Config.init(options);
-        return this;
+        return Payment;
     },
     create: (transaction) => {
         return new Promise(async (resolve, reject) => {

@@ -15,7 +15,7 @@ let config = {};
 let Session = module.exports = {
     init: (options) => {
         config = Config.init(options);
-        return this;
+        return Session;
     },
     create: () => {
         return new Promise(async (resolve, reject) => {

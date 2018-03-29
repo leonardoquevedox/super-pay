@@ -21,8 +21,9 @@ let Session = module.exports = {
     token: "",
     init: async (options) => {
         config = Config.init(options);
-        this.token = await this.create();
-        return this;
+        let token = await Session.create();
+        PagSeguroDirectPayment.setSessionId(token);
+        return Session;
     },
     create: () => {
         return new Promise(async (resolve, reject) => {

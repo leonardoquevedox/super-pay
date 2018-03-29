@@ -23,7 +23,7 @@ let config = {};
 let Payment = module.exports = {
     init: options => {
         config = Config.init(options);
-        return undefined;
+        return Payment;
     },
     create(payment) {
         return new Promise((() => {

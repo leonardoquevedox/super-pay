@@ -21,14 +21,14 @@ let Config = module.exports = {
 
         // Setting up credentials...
         if(!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_email option ;)");
-        this.api_email = options.api_email; // Merchant Login E-mail
+        Config.api_email = options.api_email; // Merchant Login E-mail
         if(!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_token option ;)");
-        this.api_token = options.api_token; // Merchant API Token
+        Config.api_token = options.api_token; // Merchant API Token
 
         // Selecting the environment...
-        this.development = options.development || true; // Reports URL
-        this.payments_url = this.development ? dev_payments_url : prod_payments_url; // Payments URL
-        this.subscriptions_url = this.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
-        return this;
+        Config.development = options.development || true; // Reports URL
+        Config.payments_url = Config.development ? dev_payments_url : prod_payments_url; // Payments URL
+        Config.subscriptions_url = Config.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
+        return Config;
     }
 }

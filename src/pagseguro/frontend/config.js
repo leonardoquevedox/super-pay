@@ -28,13 +28,13 @@ let Config = module.exports = {
         options = options || {};
 
         // Selecting the environment...
-        this.development = options.development ? options.development : true; // Reports URL
-        this.server_url = options.server_url; // Application Server
-        this.session_url = options.session_url; // Application Server
-        this.lib_url = options.development ? dev_lib_url : prod_lib_url; // Library URL
-        this.files_url = options.development ? dev_files_url : prod_files_url; // Files URL
-        this.images_url = options.development ? dev_images_url : prod_images_url; // Images URL
+        Config.development = options.development ? options.development : true; // Reports URL
+        Config.server_url = options.server_url; // Application Server
+        Config.session_url = options.session_url; // Application Server
+        Config.lib_url = options.development ? dev_lib_url : prod_lib_url; // Library URL
+        Config.files_url = options.development ? dev_files_url : prod_files_url; // Files URL
+        Config.images_url = options.development ? dev_images_url : prod_images_url; // Images URL
 
-        return this;
+        return Config;
     }
 }
