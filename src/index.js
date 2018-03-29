@@ -44,7 +44,7 @@ let SuperPay = {
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.api_token] Gateway specific settings
      * @param {string} [settings.api_email] Gateway specific settings
-     * @return {GatewayBackend} Gateway service instance
+     * @returns {GatewayBackend} Gateway service instance
      * @memberof SuperPay
      */
     Backend: (settings) => init(settings.gateway, settings, "Backend"),
@@ -53,7 +53,7 @@ let SuperPay = {
      * @param {object} settings Gateway specific settings
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.server_url] Gateway specific settings
-     * @return {GatewayFrontend} Gateway service instance
+     * @returns {GatewayFrontend} Gateway service instance
      * @memberof SuperPay
      */
     Frontend: (settings) => init(settings.gateway, settings, "Frontend")

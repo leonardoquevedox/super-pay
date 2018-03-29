@@ -32,5 +32,11 @@ let Config = module.exports = {
         Config.payments_url = Config.development ? dev_payments_url : prod_payments_url; // Payments URL
         Config.subscriptions_url = Config.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
         return Config;
+    },
+    getCredentials() {
+        return {
+            email: Config.api_email,
+            token: Config.api_token
+        };
     }
 };

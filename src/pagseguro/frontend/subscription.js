@@ -17,22 +17,17 @@ let Utils = require("./utils");
 
 let config = {};
 
-let Session = module.exports = {
-    token: "",
+let Subscription = module.exports = {
     init: async (options) => {
         config = Config.init(options);
-        let token = await Session.create();
-        PagSeguroDirectPayment.setSessionId(token);
-        return Session;
+        return Subscription;
     },
-    create: () => {
+    createPlan: (plan) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let session_url = `${config.server_url}/session`;
-                Globals.sessionToken = (await axios.get(session_url)).data;
-                Globals.senderHash = PagSeguroDirectPayment.getSenderHash();
-                PagSeguroDirectPayment.setSessionId(Globals.sessionToken);
-                resolve(Globals.sessionToken);
+                let create_plan_url = `${config.server_url}/subscription/plan`;
+                let created = (await axios.post(create_plan_url, plan)).data;
+                resolve(created);
             } catch (e) {
                 if (e.response && e.response) {
                     reject(e.response.data);

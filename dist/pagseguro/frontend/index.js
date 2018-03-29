@@ -8,18 +8,21 @@ let Utils = require("../../utils/utils");
 /* Gateway Specific Modules */
 let Config = require("./config");
 let Session = require("./session");
-let Payment = require("./payment");
 let Card = require("./card");
+let Payment = require("./payment");
+let Subscription = require("./subscription");
 
 let config = {};
 
 let Frontend = module.exports = {
     /* Session Related Functions */
     session: Session,
-    /* Payment Related Functions */
-    payment: Payment,
     /* Card Related Functions */
     card: Card,
+    /* Payment Related Functions */
+    payment: Payment,
+    /* Subscription Related Functions */
+    subscription: Subscription,
     /* Initialization function */
     init: (() => {
         var _ref = _asyncToGenerator(function* (options) {
@@ -29,8 +32,9 @@ let Frontend = module.exports = {
                     config = Config.init(options);
                     yield Utils.loadLib(config.lib_url);
                     yield Session.init(options);
-                    Payment.init(options);
                     Card.init(options);
+                    Payment.init(options);
+                    Subscription.init(options);
                 });
 
                 return function (_x2, _x3) {

@@ -21,29 +21,24 @@ let Utils = require("./utils");
 
 let config = {};
 
-let Session = module.exports = {
-    token: "",
+let Subscription = module.exports = {
     init: (() => {
         var _ref = _asyncToGenerator(function* (options) {
             config = Config.init(options);
-            let token = yield Session.create();
-            PagSeguroDirectPayment.setSessionId(token);
-            return Session;
+            return Subscription;
         });
 
         return function init(_x) {
             return _ref.apply(this, arguments);
         };
     })(),
-    create: () => {
+    createPlan: plan => {
         return new Promise((() => {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
-                    let session_url = `${config.server_url}/session`;
-                    Globals.sessionToken = (yield axios.get(session_url)).data;
-                    Globals.senderHash = PagSeguroDirectPayment.getSenderHash();
-                    PagSeguroDirectPayment.setSessionId(Globals.sessionToken);
-                    resolve(Globals.sessionToken);
+                    let create_plan_url = `${config.server_url}/subscription/plan`;
+                    let created = (yield axios.post(create_plan_url, plan)).data;
+                    resolve(created);
                 } catch (e) {
                     if (e.response && e.response) {
                         reject(e.response.data);

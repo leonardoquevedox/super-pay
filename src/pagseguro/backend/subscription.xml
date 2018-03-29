@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preApprovalRequest>
+    <reference>FUNKZIE</reference>
+    <preApproval>
+        <name>Plano massa do Mazzola</name>
+        <charge>AUTO</charge>
+        <period>MONTHLY</period>
+        <amountPerPayment>150</amountPerPayment>
+        <expiration>
+            <value/>
+            <unit/>
+        </expiration>
+    </preApproval>
+    <receiver>
+        <email>mazzola@mrionline.com</email>
+    </receiver>
+</preApprovalRequest>

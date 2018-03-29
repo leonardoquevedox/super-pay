@@ -107,7 +107,7 @@ let Payment = module.exports = {
                     resolve(response);
                 } catch (e) {
                     if (e.response && e.response) {
-                        let response = e.response.data;
+                        reject(e.response.data);
                     } else {
                         reject(e.message);
                     }

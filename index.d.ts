@@ -26,7 +26,7 @@ export class SuperPay {
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.api_token] Gateway specific settings
     * @param {string} [settings.api_email] Gateway specific settings
-    * @return {GatewayBackend} Gateway service instance
+    * @returns {GatewayBackend} Gateway service instance
     * @memberof SuperPay
     */
    static Backend(settings: { gateway: string, api_token?: string, api_email?: string }): GatewayBackend;
@@ -36,7 +36,7 @@ export class SuperPay {
     * @param {object} settings Gateway specific settings
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.server_url] Gateway specific settings
-    * @return {GatewayFrontend} Gateway service instance
+    * @returns {GatewayFrontend} Gateway service instance
     * @memberof SuperPay
     */
    static Frontend(settings: { gateway: string, server_url?: string }): GatewayFrontend;
@@ -217,13 +217,13 @@ export interface CRUD {
  * @typedef {Object} GatewayBackend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
- * @property {CRUD} subscription Payment Related Functions.
+ * @property {Subscription} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface GatewayBackend {
    card: Card;
    payment: Payment;
-   subscription: CRUD;
+   subscription: Subscription;
    session?: Session;
 }
 
@@ -232,13 +232,13 @@ export interface GatewayBackend {
  * @typedef {Object} GatewayFrontend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
- * @property {CRUD} subscription Payment Related Functions.
+ * @property {Subscription} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface GatewayFrontend {
    card: Card;
    payment: Payment;
-   subscription: CRUD;
+   subscription: Subscription;
    session?: Session;
 }
 
@@ -416,6 +416,39 @@ type CreateSession = () => SuperSession;
  */
 export interface Session {
    create: CreateSession;
+}
+
+
+/**
+ * @typedef {Object} SuperSubscriptionPlan
+ * @property {string} name Subscription name.
+ * @property {string} charge_periodicity Subscription periodicity.
+ * @property {number} charge_amount Subscription amount per payment.
+ * @property {boolean} [charge_manually] Subscription charge type.
+ * @property {string} [expiration] Subscription expiration.
+ */
+export interface SuperSubscriptionPlan {
+   name: string;
+   charge_periodicity: string;
+   charge_amount: number;
+   charge_manually?: boolean;
+   expiration?: string;
+}
+
+
+/**
+ * @typedef {Function} CreateSubscriptionPlan
+ * @param {SuperSubscriptionPlan} plan subscription plan information.
+ * @returns {string} Created subscription plan id.
+ */
+type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan) => string;
+
+/**
+ * @typedef {Object} Subscription
+ * @property {CreateSubscriptionPlan} createPlan Create subscription plan.
+ */
+export interface Subscription {
+   createPlan: CreateSubscriptionPlan;
 }
 
 

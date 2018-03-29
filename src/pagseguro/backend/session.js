@@ -30,7 +30,11 @@ let Session = module.exports = {
                 let token = xmlJS.xml2js(response, { compact: true }).session.id._text;
                 resolve(token);
             } catch (e) {
-                console.warn(e.message);
+                if (e.response && e.response) {
+                    reject(e.response.data);
+                } else {
+                    reject(e.message);
+                }
             }
         });
     }
