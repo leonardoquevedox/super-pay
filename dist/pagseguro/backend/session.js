@@ -25,7 +25,7 @@ let Session = module.exports = {
         return new Promise((() => {
             var _ref = _asyncToGenerator(function* (resolve, reject) {
                 try {
-                    let session_token_url = `${config.payments_url}/sessions`;
+                    let session_token_url = `${config.gateway_url}/v2/sessions`;
                     let credentials = {
                         email: config.api_email,
                         token: config.api_token
@@ -38,7 +38,7 @@ let Session = module.exports = {
                     if (e.response && e.response) {
                         reject(e.response.data);
                     } else {
-                        reject(e.message);
+                        reject(e);
                     }
                 }
             });

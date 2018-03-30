@@ -8,12 +8,10 @@
  */
 
 // Dev environment variables
-let dev_payments_url = "https://ws.sandbox.pagseguro.uol.com.br/v2";
-let dev_subscriptions_url = "https://ws.sandbox.pagseguro.uol.com.br/v2";
+let dev_gateway_url = "https://ws.sandbox.pagseguro.uol.com.br";
 
 // Prod environment variables
-let prod_payments_url = "https://ws.pagseguro.uol.com.br/v2";
-let prod_subscriptions_url = "https://ws.pagseguro.uol.com.br/v2";
+let prod_gateway_url = "https://ws.pagseguro.uol.com.br";
 
 let Config = module.exports = {
     init: options => {
@@ -29,8 +27,7 @@ let Config = module.exports = {
 
         // Selecting the environment...
         Config.development = options.development || true; // Reports URL
-        Config.payments_url = Config.development ? dev_payments_url : prod_payments_url; // Payments URL
-        Config.subscriptions_url = Config.development ? dev_subscriptions_url : prod_subscriptions_url; // Payments URL
+        Config.gateway_url = Config.development ? dev_gateway_url : prod_gateway_url; // Payments URL
         return Config;
     },
     getCredentials() {

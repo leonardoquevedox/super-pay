@@ -22,6 +22,8 @@
  /**
  * @typedef {Object} SuperBuyer
  * @property {string} name Buyer full name.
+ * @property {string} email Buyer e-mail.
+ * @property {string} birthDate Buyer birth date.
  * @property {SuperAddress} address Buyer address.
  * @property {SuperDocument} document Buyer document.
  */

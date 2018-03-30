@@ -285,11 +285,15 @@ export interface SuperId {
 /**
  * @typedef {Object} SuperBuyer
  * @property {string} name Buyer full name.
+ * @property {string} email Buyer e-mail.
+ * @property {string} birthDate Buyer birth date.
  * @property {SuperAddress} address Buyer address.
  * @property {SuperDocument} document Buyer document.
  */
 export interface SuperBuyer {
    name: string;
+   email: string;
+   birthDate: string;
    address: SuperAddress;
    document: SuperDocument;
 }
@@ -446,11 +450,20 @@ export interface SuperSubscriptionPlan {
 type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan) => Object;
 
 /**
+ * @typedef {Function} SubscribeToPlan
+ * @param {SuperPayment} subscription subscription payment information.
+ * @returns {object} Created subscription plan id.
+ */
+type SubscribeToPlan = (subscription: SuperPayment) => Object;
+
+/**
  * @typedef {Object} Subscription
  * @property {CreateSubscriptionPlan} createPlan Create subscription plan.
+ * @property {SubscribeToPlan} subscribe subscribe to subscription plan.
  */
 export interface Subscription {
    createPlan: CreateSubscriptionPlan;
+   subscribe: SubscribeToPlan;
 }
 
 

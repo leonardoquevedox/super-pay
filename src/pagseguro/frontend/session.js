@@ -37,7 +37,7 @@ let Session = module.exports = {
                 if (e.response && e.response) {
                     reject(e.response.data);
                 } else {
-                    reject(e.message);
+                    reject(e);
                 }
             }
         });

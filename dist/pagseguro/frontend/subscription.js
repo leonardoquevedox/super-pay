@@ -43,7 +43,7 @@ let Subscription = module.exports = {
                     if (e.response && e.response) {
                         reject(e.response.data);
                     } else {
-                        reject(e.message);
+                        reject(e);
                     }
                 }
             });
@@ -65,7 +65,7 @@ let Subscription = module.exports = {
                     if (e.response && e.response) {
                         reject(e.response.data);
                     } else {
-                        reject(e.message);
+                        reject(e);
                     }
                 }
             });

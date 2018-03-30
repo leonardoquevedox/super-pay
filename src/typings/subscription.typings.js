@@ -14,6 +14,13 @@
  */
 
 /**
+ * @typedef {Function} SubscribeToPlan
+ * @param {SuperPayment} subscription subscription payment information.
+ * @returns {object} Created subscription plan id.
+ */
+
+/**
  * @typedef {Object} Subscription
  * @property {CreateSubscriptionPlan} createPlan Create subscription plan.
+ * @property {SubscribeToPlan} subscribe subscribe to subscription plan.
  */

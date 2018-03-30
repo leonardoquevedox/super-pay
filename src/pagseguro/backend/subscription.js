@@ -26,7 +26,7 @@ let Subscription = module.exports = {
                 if (plan.expiration) plan.expiration.unit = plan.expiration.split(" ")[1];
                 if (plan.expiration && plan.expiration.unit) plan.expiration.unit += (plan.expiration.unit.toLowerCase()[plan.expiration.unit.length - 1] == "s" ? "" : "S");
                 plan.charge_type = plan.charge_manually ? "MANUAL" : "AUTO";
-                let create_url = `${config.payments_url}/pre-approvals/request`;
+                let create_url = `${config.gateway_url}/v2/pre-approvals/request`;
                 let data = {
                     preApprovalRequest: {
                         reference: "FUNKZIE",
@@ -61,7 +61,7 @@ let Subscription = module.exports = {
                 if (e.response && e.response) {
                     reject(e.response.data);
                 } else {
-                    reject(e.message);
+                    reject(e);
                 }
             }
         });
@@ -69,14 +69,13 @@ let Subscription = module.exports = {
     subscribe: (subscription) => {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log(subscription);
-                let created = await PaymentCtrl.create(subscription, "/pre-approvals/request");
-                resolve(created);
+                let created = await PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
+                resolve(created.directPreApproval.code._text);
             } catch (e) {
                 if (e.response && e.response) {
                     reject(e.response.data);
                 } else {
-                    reject(e.message);
+                    reject(e);
                 }
             }
         });
