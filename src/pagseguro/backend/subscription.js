@@ -9,6 +9,7 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 
+let PaymentCtrl = require("./payment");
 let Config = require("./config");
 let config = {};
 
@@ -56,6 +57,21 @@ let Subscription = module.exports = {
                 let created = xmlJS.xml2js(response, { compact: true });
                 let id = created.preApprovalRequest.code._text;
                 resolve({ id: id });
+            } catch (e) {
+                if (e.response && e.response) {
+                    reject(e.response.data);
+                } else {
+                    reject(e.message);
+                }
+            }
+        });
+    },
+    subscribe: (subscription) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                console.log(subscription);
+                let created = await PaymentCtrl.create(subscription, "/pre-approvals/request");
+                resolve(created);
             } catch (e) {
                 if (e.response && e.response) {
                     reject(e.response.data);

@@ -121,9 +121,9 @@ export interface SuperCardToken {
 /**
  * @typedef {Function} CreateCard
  * @param {SuperCard} card Card information.
- * @returns {SuperCard} Created card information.
+ * @returns {any} Created card information.
  */
-type CreateCard = (card: SuperCard) => SuperCard;
+type CreateCard = (card: SuperCard) => any;
 
 /**
  * @typedef {Function} GetCardBrand
@@ -300,34 +300,36 @@ export interface SuperBuyer {
  * @property {string} reference Order reference on your database.
  * @property {string} description Order reference on your database.
  * @property {Array<object>} items Order currency code (Three letters).
- * @property {SuperBuyer} buyer Order buyer.
  */
 export interface SuperOrder {
    reference: string;
    description: string;
    items: Object[];
-   buyer: SuperBuyer;
 }
 
 
 /**
  * @typedef {Object} SuperPayment
  * @property {SuperCard|SuperCardToken} instrument Payment instrument.
- * @property {string} amount Order currency code (Three letters).
+ * @property {SuperBuyer} buyer Payment buyer information.
+ * @property {number} amount Payment currency code (Three letters).
  * @property {string} reference Payment reference on your database.
  * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
  * @property {string} method The method (credit, debit, boleto) with which the payment will be processed.
+ * @property {string} [plan] Subscription plan id.
  * @property {SuperOrder} [order] Order information.
  * @property {string} [country] Country Code (Two letters).
- * @property {string} [currency] Order currency code (Three letters).
+ * @property {string} [currency] Payment currency code (Three letters).
  * @property {string} [ip] Buyer IP address.
  */
 export interface SuperPayment {
    instrument: (SuperCard|SuperCardToken);
-   amount: string;
+   buyer: SuperBuyer;
+   amount: number;
    reference: string;
    notificationURL: string;
    method: string;
+   plan?: string;
    order?: SuperOrder;
    country?: string;
    currency?: string;
@@ -439,9 +441,9 @@ export interface SuperSubscriptionPlan {
 /**
  * @typedef {Function} CreateSubscriptionPlan
  * @param {SuperSubscriptionPlan} plan subscription plan information.
- * @returns {string} Created subscription plan id.
+ * @returns {object} Created subscription plan id.
  */
-type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan) => string;
+type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan) => Object;
 
 /**
  * @typedef {Object} Subscription

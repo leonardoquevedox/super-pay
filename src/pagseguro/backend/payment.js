@@ -18,54 +18,45 @@ let Payment = module.exports = {
         config = Config.init(options);
         return Payment;
     },
-    create: (transaction) => {
+    create: (transaction, endpoint) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let phone = new PhoneNumber(transaction.order.buyer.phone, 'BR').getNumber('significant');
-                let total = parseFloat(transaction.order.amount).toFixed(2);
-                let payment = {
+                let phone = new PhoneNumber(transaction.buyer.phone, 'BR').getNumber('significant');
+                let total = parseFloat(transaction.amount).toFixed(2);
+                let data = {
+
                     /* Transaction information */
                     mode: "default",
-                    method: "creditCard",
+                    method: transaction.method,
+                    currency: transaction.currency,
                     /* Order information */
-                    reference: transaction.order.ref,
-                    currency: transaction.order.currency,
-                    extraAmount: transaction.order.extraFees ? parseFloat(transaction.order.extraFees).toFixed(2) : undefined,
+                    reference: transaction.reference,
                     notificationURL: transaction.notificationURL,
-                    items: {
-                        item: {
-                            id: "0001",
-                            description: transaction.order.description,
-                            amount: total,
-                            quantity: "1"
-                        }
-                    },
+
                     /* Payment information */
                     creditCard: {
-                        token: transaction.order.paymentInstrument.cardToken,
+                        token: transaction.instrument.cardToken,
                         /* Installments (commonly known as PARCELAS) */
                         installment: {
-                            quantity: transaction.order.installments || "1",
+                            quantity: transaction.installments || "1",
                             value: total
                         },
                         holder: {
-                            name: transaction.order.paymentInstrument.holder.name,
-                            documents: {
-                                document: {
-                                    type: transaction.order.paymentInstrument.holder.document.type,
-                                    value: transaction.order.paymentInstrument.holder.document.number ? transaction.order.paymentInstrument.holder.document.number.replace(/[^\d]/g, "") : undefined
-                                }
-                            }
+                            name: transaction.instrument.holder.name,
+                            documents: [{
+                                type: transaction.instrument.holder.document.type,
+                                value: transaction.instrument.holder.document.number ? transaction.instrument.holder.document.number.replace(/[^\d]/g, "") : undefined
+                            }]
                         },
                         /* Billing address */
                         billingAddress: {
-                            street: transaction.order.paymentInstrument.holder.address.street ? transaction.order.paymentInstrument.holder.address.street.split(",")[0] : undefined,
-                            number: transaction.order.paymentInstrument.holder.address.street ? transaction.order.paymentInstrument.holder.address.street.split(",")[1] : undefined,
-                            district: transaction.order.paymentInstrument.holder.address.neighbourhood,
-                            city: transaction.order.paymentInstrument.holder.address.city,
-                            state: transaction.order.paymentInstrument.holder.address.state,
-                            country: transaction.order.paymentInstrument.holder.address.country,
-                            postalCode: transaction.order.paymentInstrument.holder.address.postalCode ? transaction.order.paymentInstrument.holder.address.postalCode.replace(/[^\d]/g, "") : undefined,
+                            street: transaction.instrument.holder.address.street,
+                            number: transaction.instrument.holder.address.number,
+                            district: transaction.instrument.holder.address.neighbourhood,
+                            city: transaction.instrument.holder.address.city,
+                            state: transaction.instrument.holder.address.state,
+                            country: transaction.instrument.holder.address.country,
+                            postalCode: transaction.instrument.holder.address.postalCode ? transaction.instrument.holder.address.postalCode.replace(/[^\d]/g, "") : undefined,
                         }
                     },
                     shipping: {
@@ -73,28 +64,41 @@ let Payment = module.exports = {
                     },
                     /* Sender information */
                     sender: {
-                        hash: transaction.order.buyer.hash,
-
+                        hash: transaction.buyer.hash,
                         phone: {
                             areaCode: phone ? phone.substring(0, 2) : undefined,
                             number: phone ? phone.substring(2, phone.length - 1) : undefined
                         },
-                        email: transaction.order.buyer.email,
-                        name: transaction.order.buyer.name,
-                        documents: {
-                            document: {
-                                type: transaction.order.buyer.document.type,
-                                value: transaction.order.buyer.document.number ? transaction.order.buyer.document.number.replace(/[^\d]/g, "") : undefined
-                            }
-                        },
+                        email: transaction.buyer.email,
+                        name: transaction.buyer.name,
+                        documents: [{
+                            type: transaction.buyer.document.type,
+                            value: transaction.buyer.document.number ? transaction.buyer.document.number.replace(/[^\d]/g, "") : undefined
+                        }],
                     }
                 };
+                if (transaction.order) {
+                    data.extraAmount = transaction.extraFees ? parseFloat(transaction.extraFees).toFixed(2) : undefined;
+                    data.items = {
+                        item: {
+                            id: "0001",
+                            description: transaction.description,
+                            amount: total,
+                            quantity: "1"
+                        }
+                    }
+                }
+                if (transaction.plan) {
+                    data.plan = transaction.plan;
+                }
                 let credentials = {
                     email: config.api_email,
                     token: config.api_token
                 };
-                let url = config.checkout_url + "/transactions?" + querystring.stringify(credentials);
-                let response = (await axios.post(url, content.toString(), {
+                endpoint = endpoint || "/transactions";
+                let body = `<?xml version="1.0" encoding="utf-8"?>\n` + xmlJS.json2xml(data, { compact: true });
+                let url = config.checkout_url + `${endpoint}?` + querystring.stringify(credentials);
+                let response = (await axios.post(url, body, {
                     headers: {
                         "Content-Type": "application/xml; charset=ISO-8859-1"
                     }

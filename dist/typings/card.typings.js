@@ -24,7 +24,7 @@
 /**
  * @typedef {Function} CreateCard
  * @param {SuperCard} card Card information.
- * @returns {SuperCard} Created card information.
+ * @returns {any} Created card information.
  */
 
 /**

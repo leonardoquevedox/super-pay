@@ -41,7 +41,7 @@ let Card = module.exports = {
                     expirationMonth: card.expirationMonth,
                     expirationYear: card.expirationYear,
                     success: function (response) {
-                        resolve(response.card.token);
+                        resolve({ token: response.card.token });
                     },
                     error: function (error) {
                         reject(error);

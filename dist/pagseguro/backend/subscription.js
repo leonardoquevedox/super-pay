@@ -13,6 +13,7 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 
+let PaymentCtrl = require("./payment");
 let Config = require("./config");
 let config = {};
 
@@ -72,6 +73,27 @@ let Subscription = module.exports = {
 
             return function (_x, _x2) {
                 return _ref.apply(this, arguments);
+            };
+        })());
+    },
+    subscribe: subscription => {
+        return new Promise((() => {
+            var _ref2 = _asyncToGenerator(function* (resolve, reject) {
+                try {
+                    console.log(subscription);
+                    let created = yield PaymentCtrl.create(subscription, "/pre-approvals/request");
+                    resolve(created);
+                } catch (e) {
+                    if (e.response && e.response) {
+                        reject(e.response.data);
+                    } else {
+                        reject(e.message);
+                    }
+                }
+            });
+
+            return function (_x3, _x4) {
+                return _ref2.apply(this, arguments);
             };
         })());
     }

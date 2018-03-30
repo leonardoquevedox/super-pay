@@ -36,5 +36,21 @@ let Subscription = module.exports = {
                 }
             }
         });
-    }
+    },
+    subscribe: (data) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                data.buyer.hash = PagSeguroDirectPayment.getSenderHash();
+                let subscribe_plan_url = `${config.server_url}/subscription/subscribe`;
+                let subscribed = (await axios.post(subscribe_plan_url, data)).data;
+                resolve(subscribed);
+            } catch (e) {
+                if (e.response && e.response) {
+                    reject(e.response.data);
+                } else {
+                    reject(e.message);
+                }
+            }
+        });
+    },
 }

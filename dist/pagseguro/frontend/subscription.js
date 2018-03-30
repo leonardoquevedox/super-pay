@@ -52,5 +52,27 @@ let Subscription = module.exports = {
                 return _ref2.apply(this, arguments);
             };
         })());
+    },
+    subscribe: data => {
+        return new Promise((() => {
+            var _ref3 = _asyncToGenerator(function* (resolve, reject) {
+                try {
+                    data.buyer.hash = PagSeguroDirectPayment.getSenderHash();
+                    let subscribe_plan_url = `${config.server_url}/subscription/subscribe`;
+                    let subscribed = (yield axios.post(subscribe_plan_url, data)).data;
+                    resolve(subscribed);
+                } catch (e) {
+                    if (e.response && e.response) {
+                        reject(e.response.data);
+                    } else {
+                        reject(e.message);
+                    }
+                }
+            });
+
+            return function (_x4, _x5) {
+                return _ref3.apply(this, arguments);
+            };
+        })());
     }
 };

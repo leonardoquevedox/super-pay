@@ -10,7 +10,7 @@
 /**
  * @typedef {Function} CreateSubscriptionPlan
  * @param {SuperSubscriptionPlan} plan subscription plan information.
- * @returns {string} Created subscription plan id.
+ * @returns {object} Created subscription plan id.
  */
 
 /**

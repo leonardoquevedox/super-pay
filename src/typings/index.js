@@ -18,3 +18,10 @@
  * @typedef {Object} SuperId
  * @property {string} id Item id.
  */
+
+ /**
+ * @typedef {Object} SuperBuyer
+ * @property {string} name Buyer full name.
+ * @property {SuperAddress} address Buyer address.
+ * @property {SuperDocument} document Buyer document.
+ */
