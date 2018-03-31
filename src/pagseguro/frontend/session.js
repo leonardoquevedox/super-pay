@@ -12,7 +12,6 @@ let axios = require("axios");
 let moment = require("moment");
 
 let Config = require("./config");
-let Globals = require("./globals");
 let Utils = require("./utils");
 
 let config = {};
@@ -20,19 +19,23 @@ let config = {};
 let Session = module.exports = {
     token: "",
     init: async (options) => {
-        config = Config.init(options);
-        let token = await Session.create();
-        PagSeguroDirectPayment.setSessionId(token);
-        return Session;
+        try {
+            config = Config.init(options);
+            let token = await Session.create();
+            PagSeguroDirectPayment.setSessionId(token);
+            return Session;
+        } catch (e) {
+            console.warn(e);
+        }
     },
     create: () => {
         return new Promise(async (resolve, reject) => {
             try {
                 let session_url = `${config.server_url}/session`;
-                Globals.sessionToken = (await axios.get(session_url)).data;
-                Globals.senderHash = PagSeguroDirectPayment.getSenderHash();
-                PagSeguroDirectPayment.setSessionId(Globals.sessionToken);
-                resolve(Globals.sessionToken);
+                let sessionToken = (await axios.get(session_url)).data;
+                let senderHash = PagSeguroDirectPayment.getSenderHash();
+                PagSeguroDirectPayment.setSessionId(sessionToken);
+                resolve(sessionToken);
             } catch (e) {
                 if (e.response && e.response) {
                     reject(e.response.data);

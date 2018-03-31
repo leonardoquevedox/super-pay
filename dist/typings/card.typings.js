@@ -28,12 +28,6 @@
  */
 
 /**
- * @typedef {Function} GetCardBrand
- * @param {string} number Card information.
- * @returns {Object} Created card information.
- */
-
-/**
  * @typedef {Object} CardExpirationOptions
  * @property {Array<string>} months Expiration months.
  * @property {Array<string>} years Expiration years.
@@ -47,7 +41,6 @@
 /**
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
- * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
  */
 "use strict";

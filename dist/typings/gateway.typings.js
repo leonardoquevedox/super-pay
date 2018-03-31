@@ -1,5 +1,5 @@
 /**
- * @typedef {Object} GatewayBackend
+ * @typedef {Object} SuperGatewayBackend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
@@ -7,7 +7,7 @@
  */
 
 /**
- * @typedef {Object} GatewayFrontend
+ * @typedef {Object} SuperGatewayFrontend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.

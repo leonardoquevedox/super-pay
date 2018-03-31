@@ -7,12 +7,6 @@ let CardInfo = require("@polvo-labs/card-type");
 let Utils = require("../utils/utils");
 
 let CardUtils = module.exports = {
-    getBrand: async (cardNumber) => {
-        return new Promise((resolve, reject) => {
-            let brand = CardInfo.cardType(cardNumber);
-            resolve(brand);
-        });
-    },
     initExpirationDates: async () => {
         return new Promise((resolve, reject) => {
             let expiration = {

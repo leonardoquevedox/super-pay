@@ -20,7 +20,7 @@ let Config = module.exports = {
         // Setting up credentials...
         if (!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_email option ;)");
         Config.api_email = options.api_email; // Merchant Login E-mail
-        if (!options.api_email) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_token option ;)");
+        if (!options.api_token) console.warn("SuperPay to Major Tom: Whoops! It looks like you have forgotten the api_token option ;)");
         Config.api_token = options.api_token; // Merchant API Token
 
         // Selecting the environment...

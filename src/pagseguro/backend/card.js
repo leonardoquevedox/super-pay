@@ -20,16 +20,6 @@ let Card = module.exports = {
             resolve(card);
         });
     },
-    read: (card) => {
-        return new Promise(async (resolve, reject) => {
-
-        });
-    },
-    update: (card) => {
-        return new Promise(async (resolve, reject) => {
-
-        });
-    },
     delete: (card) => {
         return new Promise(async (resolve, reject) => {
 

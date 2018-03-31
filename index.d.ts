@@ -17,6 +17,8 @@ export class SuperPay {
    /**
     * @property {Object} SUPPORTED_GATEWAYS Supported gateways list
     * @property {Object} SUPPORTED_GATEWAYS.PAG_SEGURO PagSeguro Gateway
+    * @property {Object} SUPPORTED_GATEWAYS.PAY_U Pay-U Gateway
+    * @property {Object} SUPPORTED_GATEWAYS.MOIP Pay-U Gateway
     */
    static SUPPORTED_GATEWAYS: any;
 
@@ -26,20 +28,20 @@ export class SuperPay {
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.api_token] Gateway specific settings
     * @param {string} [settings.api_email] Gateway specific settings
-    * @returns {GatewayBackend} Gateway service instance
+    * @returns {SuperGatewayBackend} Gateway service instance
     * @memberof SuperPay
     */
-   static Backend(settings: { gateway: string, api_token?: string, api_email?: string }): GatewayBackend;
+   static Backend(settings: { gateway: string, api_token?: string, api_email?: string }): SuperGatewayBackend;
 
    /**
     * @function
     * @param {object} settings Gateway specific settings
     * @param {string} settings.gateway Gateway specific settings
     * @param {string} [settings.server_url] Gateway specific settings
-    * @returns {GatewayFrontend} Gateway service instance
+    * @returns {SuperGatewayFrontend} Gateway service instance
     * @memberof SuperPay
     */
-   static Frontend(settings: { gateway: string, server_url?: string }): GatewayFrontend;
+   static Frontend(settings: { gateway: string, server_url?: string }): SuperGatewayFrontend;
 
 }
 
@@ -50,6 +52,14 @@ export class SuperPay {
  * Module for integrating with the Pay U payment service throught Node.js.
  */
 export var querystring: any;
+
+/**
+ * @author @vranahub.
+ * @license MIT
+ * @version 0.0.5
+ * Module for integrating with the PagSeguro payment service throught Node.js.
+ */
+export const base64: any;
 
 /**
  * @author @vranahub.
@@ -66,6 +76,14 @@ export var PhoneNumber: any;
  * Module for integrating with the Pay U payment service throught Node.js.
  */
 export var Promise: any;
+
+/**
+ * @author @vranahub.
+ * @license MIT
+ * @version 0.0.5
+ * Module for integrating with the PagSeguro payment service throught Node.js.
+ */
+export var Config: any;
 
 /**
  * @author @vranahub.
@@ -126,13 +144,6 @@ export interface SuperCardToken {
 type CreateCard = (card: SuperCard) => any;
 
 /**
- * @typedef {Function} GetCardBrand
- * @param {string} number Card information.
- * @returns {Object} Created card information.
- */
-type GetCardBrand = (number: string) => Object;
-
-/**
  * @typedef {Object} CardExpirationOptions
  * @property {Array<string>} months Expiration months.
  * @property {Array<string>} years Expiration years.
@@ -152,12 +163,10 @@ type GetExpirationOptions = () => CardExpirationOptions;
 /**
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
- * @property {GetCardBrand} getBrand Get Card Info Based On Number.
  * @property {CreateCard} create Create Card on Gateway.
  */
 export interface Card {
    getExpirationOptions: GetExpirationOptions;
-   getBrand: GetCardBrand;
    create: CreateCard;
 }
 
@@ -214,13 +223,13 @@ export interface CRUD {
 
 
 /**
- * @typedef {Object} GatewayBackend
+ * @typedef {Object} SuperGatewayBackend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
-export interface GatewayBackend {
+export interface SuperGatewayBackend {
    card: Card;
    payment: Payment;
    subscription: Subscription;
@@ -229,13 +238,13 @@ export interface GatewayBackend {
 
 
 /**
- * @typedef {Object} GatewayFrontend
+ * @typedef {Object} SuperGatewayFrontend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
-export interface GatewayFrontend {
+export interface SuperGatewayFrontend {
    card: Card;
    payment: Payment;
    subscription: Subscription;
@@ -398,6 +407,21 @@ export interface Payment {
    read: ReadPayment;
    update: UpdatePayment;
    delete: DeletePayment;
+}
+
+
+/**
+ * @typedef {Object} SuperReceiver
+ * @property {string} id Receiver id.
+ * @property {boolean} isPrimary Receiver type.
+ * @property {number} [percentage] Receiver percentage on the transaction.
+ * @property {number} [fee] Receiver fee.
+ */
+export interface SuperReceiver {
+   id: string;
+   isPrimary: boolean;
+   percentage?: number;
+   fee?: number;
 }
 
 

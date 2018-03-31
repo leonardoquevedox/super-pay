@@ -8,6 +8,8 @@ let chalk = require("chalk");
 let log = console.log;
 
 let PagSeguro = require("./pagseguro");
+let PayU = require("./pagseguro");
+let MoIP = require("./moip");
 
 let init = (gateway, settings, layer) => {
     try {
@@ -33,10 +35,13 @@ let SuperPay = {
     /** 
      * @property {Object} SUPPORTED_GATEWAYS Supported gateways list
      * @property {Object} SUPPORTED_GATEWAYS.PAG_SEGURO PagSeguro Gateway
+     * @property {Object} SUPPORTED_GATEWAYS.PAY_U Pay-U Gateway
+     * @property {Object} SUPPORTED_GATEWAYS.MOIP Pay-U Gateway
      */
     SUPPORTED_GATEWAYS: {
         PAG_SEGURO: PagSeguro,
-        // PAY_U: "PAY_U"
+        PAY_U: PayU,
+        MOIP: MoIP
     },
     /**
      * @function
@@ -44,7 +49,7 @@ let SuperPay = {
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.api_token] Gateway specific settings
      * @param {string} [settings.api_email] Gateway specific settings
-     * @returns {GatewayBackend} Gateway service instance
+     * @returns {SuperGatewayBackend} Gateway service instance
      * @memberof SuperPay
      */
     Backend: (settings) => init(settings.gateway, settings, "Backend"),
@@ -53,7 +58,7 @@ let SuperPay = {
      * @param {object} settings Gateway specific settings
      * @param {string} settings.gateway Gateway specific settings
      * @param {string} [settings.server_url] Gateway specific settings
-     * @returns {GatewayFrontend} Gateway service instance
+     * @returns {SuperGatewayFrontend} Gateway service instance
      * @memberof SuperPay
      */
     Frontend: (settings) => init(settings.gateway, settings, "Frontend")

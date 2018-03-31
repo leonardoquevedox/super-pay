@@ -14,12 +14,11 @@ let axios = require("axios");
 let moment = require("moment");
 
 let Config = require("./config");
-let Globals = require("./globals");
 let Utils = require("./utils");
 let CardUtils = require("../../utils/card.utils");
 
-let formatCardNumber = cardNumber => {
-    return cardNumber.replace(/ /g, "");
+let formatCardNumber = number => {
+    return number.replace(/ /g, "");
 };
 /* let dev_card_brand_url = `${config.images_url}/payment-methods-flags/42x20`; */
 
@@ -35,7 +34,7 @@ let Card = module.exports = {
             return new Promise(function (resolve, reject) {
                 if (card.brand) card.brand = card.brand.toLowerCase();
                 PagSeguroDirectPayment.createCardToken({
-                    cardNumber: formatCardNumber(card.cardNumber),
+                    number: formatCardNumber(card.number),
                     brand: card.brand,
                     cvv: card.cvv,
                     expirationMonth: card.expirationMonth,
@@ -61,16 +60,6 @@ let Card = module.exports = {
 
         return function getExpirationOptions() {
             return _ref2.apply(this, arguments);
-        };
-    })(),
-    getBrand: (() => {
-        var _ref3 = _asyncToGenerator(function* (cardNumber) {
-            let brand = yield CardUtils.getBrand(cardNumber);
-            return brand;
-        });
-
-        return function getBrand(_x2) {
-            return _ref3.apply(this, arguments);
         };
     })()
 };
