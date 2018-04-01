@@ -8,6 +8,9 @@ let querystring = require('querystring');
 let axios = require("axios");
 let Promise = require("bluebird");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Customer = require("./customer");
 let Config = require("./config");
 let config = {};
@@ -29,11 +32,7 @@ let Order = module.exports = {
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -82,11 +81,7 @@ let Order = module.exports = {
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -102,11 +97,7 @@ let Order = module.exports = {
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     }

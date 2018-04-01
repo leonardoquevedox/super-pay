@@ -10,6 +10,9 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
 
@@ -26,11 +29,7 @@ let Payment = module.exports = {
                 let response = await axios.post(`${config.server_url}/payment`);
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
 
         });

@@ -13,6 +13,9 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
 
@@ -24,56 +27,52 @@ let Customer = module.exports = {
         return Customer; // Returns the module.
     },
     create: (() => {
-        var _ref = _asyncToGenerator(function* (customer) {
+        var _ref = _asyncToGenerator(function* (customer, xAccessToken) {
             return new Promise((() => {
                 var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                     try {
+                        let reqConfig = { headers: {} };
+                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                         let create_customer_url = `${config.server_url}/customer`;
-                        let created = (yield axios.post(create_customer_url, customer)).data;
+                        let created = (yield axios.post(create_customer_url, customer, reqConfig)).data;
                         resolve(created);
                     } catch (e) {
-                        if (e.response && e.response) {
-                            reject(e.response.data);
-                        } else {
-                            reject(e);
-                        }
+                        ErrorUtils.handle(reject, e);
                     }
                 });
 
-                return function (_x2, _x3) {
+                return function (_x3, _x4) {
                     return _ref2.apply(this, arguments);
                 };
             })());
         });
 
-        return function create(_x) {
+        return function create(_x, _x2) {
             return _ref.apply(this, arguments);
         };
     })(),
     list: (() => {
-        var _ref3 = _asyncToGenerator(function* (customerId) {
+        var _ref3 = _asyncToGenerator(function* (customerId, xAccessToken) {
             return new Promise((() => {
                 var _ref4 = _asyncToGenerator(function* (resolve, reject) {
                     try {
+                        let reqConfig = { headers: {} };
+                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                         let list_customers_url = `${config.server_url}/${customerId}/customers`;
-                        let list = (yield axios.get(list_customers_url, customer)).data;
+                        let list = (yield axios.get(list_customers_url, customer, reqConfig)).data;
                         resolve(list);
                     } catch (e) {
-                        if (e.response && e.response) {
-                            reject(e.response.data);
-                        } else {
-                            reject(e);
-                        }
+                        ErrorUtils.handle(reject, e);
                     }
                 });
 
-                return function (_x5, _x6) {
+                return function (_x7, _x8) {
                     return _ref4.apply(this, arguments);
                 };
             })());
         });
 
-        return function list(_x4) {
+        return function list(_x5, _x6) {
             return _ref3.apply(this, arguments);
         };
     })()

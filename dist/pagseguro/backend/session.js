@@ -13,6 +13,9 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let config = {};
 
@@ -35,11 +38,7 @@ let Session = module.exports = {
                     let token = xmlJS.xml2js(response, { compact: true }).session.id._text;
                     resolve(token);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 

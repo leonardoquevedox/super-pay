@@ -16,6 +16,7 @@ let moment = require("moment");
 let Config = require("./config");
 let Utils = require("./utils");
 let CardUtils = require("../../utils/card.utils");
+let ErrorUtils = require("../../utils/error.utils");
 
 let formatCardNumber = cardNumber => {
     return cardNumber.replace(/ /g, "");
@@ -34,15 +35,13 @@ let Card = module.exports = {
             return new Promise((() => {
                 var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                     try {
+                        let reqConfig = { headers: {} };
+                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                         let tokenize_card_url = `${config.server_url}/card`;
-                        let tokenized = (yield axios.post(tokenize_card_url, card)).data;
+                        let tokenized = (yield axios.post(tokenize_card_url, card, reqConfig)).data;
                         resolve(tokenized);
                     } catch (e) {
-                        if (e.response && e.response) {
-                            reject(e.response.data);
-                        } else {
-                            reject(e);
-                        }
+                        ErrorUtils.handle(reject, e);
                     }
                 });
 
@@ -57,29 +56,27 @@ let Card = module.exports = {
         };
     })(),
     list: (() => {
-        var _ref3 = _asyncToGenerator(function* (customerId) {
+        var _ref3 = _asyncToGenerator(function* (customer, xAccessToken) {
             return new Promise((() => {
                 var _ref4 = _asyncToGenerator(function* (resolve, reject) {
                     try {
-                        let list_cards_url = `${config.server_url}/${customerId}/cards`;
-                        let list = (yield axios.get(list_cards_url)).data;
+                        let reqConfig = { headers: {} };
+                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
+                        let list_cards_url = `${config.server_url}/customer/${customer.id}/cards`;
+                        let list = (yield axios.get(list_cards_url, reqConfig)).data;
                         resolve(list);
                     } catch (e) {
-                        if (e.response && e.response) {
-                            reject(e.response.data);
-                        } else {
-                            reject(e);
-                        }
+                        ErrorUtils.handle(reject, e);
                     }
                 });
 
-                return function (_x5, _x6) {
+                return function (_x6, _x7) {
                     return _ref4.apply(this, arguments);
                 };
             })());
         });
 
-        return function list(_x4) {
+        return function list(_x4, _x5) {
             return _ref3.apply(this, arguments);
         };
     })(),

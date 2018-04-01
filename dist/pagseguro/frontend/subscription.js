@@ -15,6 +15,9 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
 
@@ -39,11 +42,7 @@ let Subscription = module.exports = {
                     let created = (yield axios.post(create_plan_url, plan)).data;
                     resolve(created);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 
@@ -61,11 +60,7 @@ let Subscription = module.exports = {
                     let subscribed = (yield axios.post(subscribe_plan_url, data)).data;
                     resolve(subscribed);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 

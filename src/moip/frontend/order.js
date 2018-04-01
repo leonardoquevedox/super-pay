@@ -9,6 +9,9 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
 
@@ -26,11 +29,7 @@ let Order = module.exports = {
                 let tokenized = (await axios.post(tokenize_order_url, order)).data;
                 resolve(tokenized);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -41,11 +40,7 @@ let Order = module.exports = {
                 let tokenized = (await axios.post(tokenize_order_url, order)).data;
                 resolve(tokenized);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },

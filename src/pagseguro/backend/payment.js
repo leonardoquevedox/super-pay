@@ -13,6 +13,9 @@ let axios = require("axios");
 let md5 = require("md5");
 const countries = require("i18n-iso-countries");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let config = {};
 
@@ -147,11 +150,7 @@ let Payment = module.exports = {
                 let parsed = xmlJS.xml2js(response, { compact: true });
                 resolve(parsed);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         })
     }

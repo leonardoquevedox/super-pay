@@ -3,6 +3,7 @@
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
+ * @property {Customer} [customer] Customer Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 
@@ -11,6 +12,7 @@
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
+ * @property {Customer} [customer] Customer Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 "use strict";

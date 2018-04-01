@@ -9,6 +9,9 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let PaymentCtrl = require("./payment");
 let Config = require("./config");
 let config = {};
@@ -58,11 +61,7 @@ let Subscription = module.exports = {
                 let id = created.preApprovalRequest.code._text;
                 resolve({ id: id });
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -72,11 +71,7 @@ let Subscription = module.exports = {
                 let created = await PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
                 resolve(created.directPreApproval.code._text);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     }

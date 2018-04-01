@@ -4,9 +4,16 @@
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
-let querystring = require('querystring');
-let axios = require("axios");
+let PhoneNumber = require("awesome-phonenumber");
+let querystring = require("querystring");
 let Promise = require("bluebird");
+let ip = require("ip");
+let axios = require("axios");
+let md5 = require("md5");
+const countries = require("i18n-iso-countries");
+
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
 
 let Config = require("./config");
 let config = {};
@@ -20,6 +27,7 @@ let Customer = module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 let phone = new PhoneNumber(customer.phone, "BR").getNumber("significant");
+                let birthDate = (customer.birthDate || "").replace(/\//g, "-");
                 if (customer.address && customer.address.country && (customer.address.country.length < 3))
                     customer.address.country = countries.toAlpha3(customer.address.country);
                 /* Sender information */
@@ -52,16 +60,12 @@ let Customer = module.exports = {
                 let response = (await axios.post(url, data, {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": Config.base64Auth
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -72,16 +76,12 @@ let Customer = module.exports = {
                 let response = (await axios.get(url, {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": Config.base64Auth
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
@@ -92,16 +92,12 @@ let Customer = module.exports = {
                 let response = (await axios.get(url, {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": Config.base64Auth
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
                 resolve(response);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     }

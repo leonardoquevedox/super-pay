@@ -139,9 +139,10 @@ export interface SuperCardToken {
 /**
  * @typedef {Function} CreateCard
  * @param {SuperCard} card Card information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {any} Created card information.
  */
-type CreateCard = (card: SuperCard) => any;
+type CreateCard = (card: SuperCard, xAccessToken?: string) => any;
 
 /**
  * @typedef {Object} CardExpirationOptions
@@ -161,13 +162,23 @@ export interface CardExpirationOptions {
 type GetExpirationOptions = () => CardExpirationOptions;
 
 /**
+ * @typedef {Function} ListCards
+ * @param {SuperId} id Customer id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperCard>}
+ */
+type ListCards = (id: SuperId, xAccessToken?: string) => SuperCard[];
+
+/**
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
  * @property {CreateCard} create Create Card on Gateway.
+ * @property {ListCards} [list] List user payments.
  */
 export interface Card {
    getExpirationOptions: GetExpirationOptions;
    create: CreateCard;
+   list?: ListCards;
 }
 
 
@@ -223,16 +234,45 @@ export interface CRUD {
 
 
 /**
+ * @typedef {Function} CreateCustomer
+ * @param {SuperBuyer} card Customer information.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {any} Created card information.
+ */
+type CreateCustomer = (card: SuperBuyer, xAccessToken?: string) => any;
+
+/**
+ * @typedef {Function} ListCustomers
+ * @param {SuperId} id Customer id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperBuyer>}
+ */
+type ListCustomers = (id: SuperId, xAccessToken?: string) => SuperBuyer[];
+
+/**
+ * @typedef {Object} Customer
+ * @property {CreateCustomer} create Create Customer on Gateway.
+ * @property {ListCustomers} [list] List user payments.
+ */
+export interface Customer {
+   create: CreateCustomer;
+   list?: ListCustomers;
+}
+
+
+/**
  * @typedef {Object} SuperGatewayBackend
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
+ * @property {Customer} [customer] Customer Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface SuperGatewayBackend {
    card: Card;
    payment: Payment;
    subscription: Subscription;
+   customer?: Customer;
    session?: Session;
 }
 
@@ -242,12 +282,14 @@ export interface SuperGatewayBackend {
  * @property {Card} card Card Related Functions.
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
+ * @property {Customer} [customer] Customer Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface SuperGatewayFrontend {
    card: Card;
    payment: Payment;
    subscription: Subscription;
+   customer?: Customer;
    session?: Session;
 }
 

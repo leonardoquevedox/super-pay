@@ -24,6 +24,7 @@
 /**
  * @typedef {Function} CreateCard
  * @param {SuperCard} card Card information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {any} Created card information.
  */
 
@@ -39,8 +40,16 @@
 */
 
 /**
+* @typedef {Function} ListCards
+* @param {SuperId} id Customer id.
+* @param {string} [xAccessToken] Server access token.
+* @returns {Array<SuperCard>}
+*/
+
+/**
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
  * @property {CreateCard} create Create Card on Gateway.
+ * @property {ListCards} [list] List user payments.
  */
 "use strict";

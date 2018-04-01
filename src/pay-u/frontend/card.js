@@ -9,9 +9,12 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+let CardUtils = require("../../utils/card.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
-let CardUtils = require("../../utils/card.utils");
 
 let formatCardNumber = (cardNumber) => {
     return cardNumber.replace(/ /g, "");
@@ -32,11 +35,7 @@ let Card = module.exports = {
                 let tokenized = (await axios.post(tokenize_card_url, card)).data;
                 resolve(tokenized);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },

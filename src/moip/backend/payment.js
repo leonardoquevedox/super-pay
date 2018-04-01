@@ -8,10 +8,12 @@ let PhoneNumber = require("awesome-phonenumber");
 let querystring = require("querystring");
 let Promise = require("bluebird");
 let ip = require("ip");
-let xmlJS = require("xml-js");
 let axios = require("axios");
 let md5 = require("md5");
 const countries = require("i18n-iso-countries");
+
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
 
 let Config = require("./config");
 let config = {};
@@ -36,11 +38,7 @@ let Payment = module.exports = {
                 };
                 resolve(parsed);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         })
     }

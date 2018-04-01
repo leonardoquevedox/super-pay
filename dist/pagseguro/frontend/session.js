@@ -15,6 +15,9 @@ let querystring = require("querystring");
 let axios = require("axios");
 let moment = require("moment");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Config = require("./config");
 let Utils = require("./utils");
 
@@ -48,11 +51,7 @@ let Session = module.exports = {
                     PagSeguroDirectPayment.setSessionId(sessionToken);
                     resolve(sessionToken);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 

@@ -12,6 +12,7 @@ let moment = require("moment");
 let Config = require("./config");
 let Utils = require("./utils");
 let CardUtils = require("../../utils/card.utils");
+let ErrorUtils = require("../../utils/error.utils");
 
 let formatCardNumber = (cardNumber) => {
     return cardNumber.replace(/ /g, "");
@@ -28,30 +29,26 @@ let Card = module.exports = {
     create: async (card) => {
         return new Promise(async (resolve, reject) => {
             try {
+                let reqConfig = { headers: {} };
+                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                 let tokenize_card_url = `${config.server_url}/card`;
-                let tokenized = (await axios.post(tokenize_card_url, card)).data;
+                let tokenized = (await axios.post(tokenize_card_url, card, reqConfig)).data;
                 resolve(tokenized);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },
-    list: async (customerId) => {
+    list: async (customer, xAccessToken) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let list_cards_url = `${config.server_url}/${customerId}/cards`;
-                let list = (await axios.get(list_cards_url)).data;
+                let reqConfig = { headers: {} };
+                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
+                let list_cards_url = `${config.server_url}/customer/${customer.id}/cards`;
+                let list = (await axios.get(list_cards_url, reqConfig)).data;
                 resolve(list);
             } catch (e) {
-                if (e.response && e.response) {
-                    reject(e.response.data);
-                } else {
-                    reject(e);
-                }
+                ErrorUtils.handle(reject, e);
             }
         });
     },

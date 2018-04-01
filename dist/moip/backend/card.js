@@ -12,6 +12,9 @@ let querystring = require('querystring');
 let axios = require("axios");
 let Promise = require("bluebird");
 
+/* Util modules */
+let ErrorUtils = require("../../utils/error.utils");
+
 let Customer = require("./customer");
 let Config = require("./config");
 let config = {};
@@ -65,16 +68,12 @@ let Card = module.exports = {
                     let response = (yield axios.post(url, data, {
                         headers: {
                             "Content-Type": "application/json",
-                            "Authorization": Config.base64Auth
+                            "Authorization": `Basic ${Config.base64Auth}`
                         }
                     })).data;
                     resolve(response);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 
@@ -88,14 +87,14 @@ let Card = module.exports = {
             var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let url = `${Config.gateway_url}/v2/fundinginstruments/${id}`;
-                    let response = (yield axios.delete(url, data, { headers: { "Authorization": Config.base64Auth } })).data;
+                    let response = (yield axios.delete(url, data, {
+                        headers: {
+                            "Authorization": `Basic ${Config.base64Auth}`
+                        }
+                    })).data;
                     resolve(response);
                 } catch (e) {
-                    if (e.response && e.response) {
-                        reject(e.response.data);
-                    } else {
-                        reject(e);
-                    }
+                    ErrorUtils.handle(reject, e);
                 }
             });
 
