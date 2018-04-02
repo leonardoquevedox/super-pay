@@ -63,9 +63,9 @@ let Order = module.exports = {
                         }
                     },
                     "items": [{
-                        "product": order.description,
+                        "product": transaction.order.description,
                         "quantity": 1,
-                        "price": transaction.amount
+                        "price": transaction.order.amount
                     }],
                     "customer": {
                         "id": transaction.buyer.id
@@ -76,7 +76,7 @@ let Order = module.exports = {
                 let response = (await axios.post(url, data, {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": Config.base64Auth
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
                 resolve(response);
@@ -92,7 +92,7 @@ let Order = module.exports = {
                 let response = (await axios.delete(url, {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": Config.base64Auth
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
                 resolve(response);

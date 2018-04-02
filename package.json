@@ -1,6 +1,6 @@
 {
   "name": "super-pay",
-  "version": "0.9.9-dev-169",
+  "version": "0.9.9-dev-179",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
   "scripts": {

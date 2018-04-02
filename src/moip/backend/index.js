@@ -1,34 +1,42 @@
 /* Internal Modules */
-let BackendConfig = require('./config');
-let CardBackend = require('./card');
-let CustomerBackend = require('./customer');
-let MerchantBackend = require('./merchant');
-let PaymentBackend = require('./payment');
-let SubscriptionBackend = require('./subscription');
+let Config = require('./config');
+let Card = require('./card');
+let Customer = require('./customer');
+let Merchant = require('./merchant');
+let Order = require('./order');
+let Payment = require('./payment');
+let Subscriber = require("./subscriber");
+let Subscription = require('./subscription');
 
 let config = {};
 
 let Backend = module.exports = {
-    /* Backend Card Related Functions */
-    card: CardBackend,
-    /* Backend Customer Related Functions */
-    customer: CustomerBackend,
-    /* Backend Merchant Related Functions */
-    merchant: MerchantBackend,
-    /* Backend Payment Related Functions */
-    payment: PaymentBackend,
-    /* Backend Subscription Related Functions */
-    subscription: SubscriptionBackend,
+    /* Card Related Functions */
+    card: Card,
+    /* Customer Related Functions */
+    customer: Customer,
+    /* Merchant Related Functions */
+    merchant: Merchant,
+    /* Order Related Functions */
+    order: Order,
+    /* Payment Related Functions */
+    payment: Payment,
+    /* Subscriber Related Functions */
+    subscriber: Subscriber,
+    /* Subscription Related Functions */
+    subscription: Subscription,
     /* Initialization function */
     init: async (options) => {
         return new Promise((resolve, reject) => {
             options = options || {};
-            config = BackendConfig.init(options);
-            CardBackend.init(options);
-            CustomerBackend.init(options);
-            MerchantBackend.init(options);
-            PaymentBackend.init(options);
-            SubscriptionBackend.init(options);
+            config = Config.init(options);
+            Card.init(options);
+            Customer.init(options);
+            Merchant.init(options);
+            Order.init(options);
+            Payment.init(options);
+            Subscriber.init(options);
+            Subscription.init(options);
             resolve(config);
         });
     }

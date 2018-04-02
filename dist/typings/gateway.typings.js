@@ -1,20 +1,22 @@
 /**
  * @typedef {Object} SuperGatewayBackend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {Subscription} subscription Payment Related Functions.
- * @property {Customer} [customer] Customer Related Functions.
- * @property {Merchant} [merchant] Merchant Related Functions.
- * @property {Session} [session] Session Related Functions.
+ * @property {Card} card Card related functions.
+ * @property {Payment} payment Payment related functions.
+ * @property {Subscription} subscription Payment related functions.
+ * @property {Customer} [customer] Customer related functions.
+ * @property {Merchant} [merchant] Merchant related functions.
+ * @property {Order} [order] Order related functions.
+ * @property {Session} [session] Session related functions.
  */
 
 /**
  * @typedef {Object} SuperGatewayFrontend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {Subscription} subscription Payment Related Functions.
- * @property {Customer} [customer] Customer Related Functions.
- * @property {Merchant} [merchant] Merchant Related Functions.
- * @property {Session} [session] Session Related Functions.
+ * @property {Card} card Card related functions.
+ * @property {Payment} payment Payment related functions.
+ * @property {Subscription} subscription Payment related functions.
+ * @property {Customer} [customer] Customer related functions.
+ * @property {Merchant} [merchant] Merchant related functions.
+ * @property {Order} [order] Order related functions.
+ * @property {Session} [session] Session related functions.
  */
 "use strict";

@@ -21,20 +21,20 @@ let Utils = require("./utils");
 
 let config = {};
 
-let Order = module.exports = {
+let Subscriber = module.exports = {
     init: options => {
         config = Config.init(options); // Initialize module.
-        return Order; // Returns the module.
+        return Subscriber; // Returns the module.
     },
     create: (() => {
-        var _ref = _asyncToGenerator(function* (order, xAccessToken) {
+        var _ref = _asyncToGenerator(function* (subscriber, xAccessToken) {
             return new Promise((() => {
                 var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                     try {
                         let reqConfig = { headers: {} };
                         if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
-                        let create_order_url = `${config.server_url}/order`;
-                        let created = (yield axios.post(create_order_url, order, reqConfig)).data;
+                        let create_subscriber_url = `${config.server_url}/subscriber`;
+                        let created = (yield axios.post(create_subscriber_url, subscriber, reqConfig)).data;
                         resolve(created);
                     } catch (e) {
                         ErrorUtils.handle(reject, e);
@@ -49,31 +49,6 @@ let Order = module.exports = {
 
         return function create(_x, _x2) {
             return _ref.apply(this, arguments);
-        };
-    })(),
-    list: (() => {
-        var _ref3 = _asyncToGenerator(function* (orderId, xAccessToken) {
-            return new Promise((() => {
-                var _ref4 = _asyncToGenerator(function* (resolve, reject) {
-                    try {
-                        let reqConfig = { headers: {} };
-                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
-                        let list_orders_url = `${config.server_url}/${orderId}/orders`;
-                        let list = (yield axios.get(list_orders_url, order, reqConfig)).data;
-                        resolve(list);
-                    } catch (e) {
-                        ErrorUtils.handle(reject, e);
-                    }
-                });
-
-                return function (_x7, _x8) {
-                    return _ref4.apply(this, arguments);
-                };
-            })());
-        });
-
-        return function list(_x5, _x6) {
-            return _ref3.apply(this, arguments);
         };
     })()
 };

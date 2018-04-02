@@ -17,32 +17,19 @@ let Utils = require("./utils");
 
 let config = {};
 
-let Order = module.exports = {
+let Subscriber = module.exports = {
     init: (options) => {
         config = Config.init(options); // Initialize module.
-        return Order; // Returns the module.
+        return Subscriber; // Returns the module.
     },
-    create: async (order, xAccessToken) => {
+    create: async (subscriber, xAccessToken) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reqConfig = { headers: {} };
                 if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
-                let create_order_url = `${config.server_url}/order`;
-                let created = (await axios.post(create_order_url, order, reqConfig)).data;
+                let create_subscriber_url = `${config.server_url}/subscriber`;
+                let created = (await axios.post(create_subscriber_url, subscriber, reqConfig)).data;
                 resolve(created);
-            } catch (e) {
-                ErrorUtils.handle(reject, e);
-            }
-        });
-    },
-    list: async (orderId, xAccessToken) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let reqConfig = { headers: {} };
-                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
-                let list_orders_url = `${config.server_url}/${orderId}/orders`;
-                let list = (await axios.get(list_orders_url, order, reqConfig)).data;
-                resolve(list);
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }

@@ -272,12 +272,13 @@ export interface Customer {
 
 /**
  * @typedef {Object} SuperGatewayBackend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {Subscription} subscription Payment Related Functions.
- * @property {Customer} [customer] Customer Related Functions.
- * @property {Merchant} [merchant] Merchant Related Functions.
- * @property {Session} [session] Session Related Functions.
+ * @property {Card} card Card related functions.
+ * @property {Payment} payment Payment related functions.
+ * @property {Subscription} subscription Payment related functions.
+ * @property {Customer} [customer] Customer related functions.
+ * @property {Merchant} [merchant] Merchant related functions.
+ * @property {Order} [order] Order related functions.
+ * @property {Session} [session] Session related functions.
  */
 export interface SuperGatewayBackend {
    card: Card;
@@ -285,18 +286,20 @@ export interface SuperGatewayBackend {
    subscription: Subscription;
    customer?: Customer;
    merchant?: Merchant;
+   order?: Order;
    session?: Session;
 }
 
 
 /**
  * @typedef {Object} SuperGatewayFrontend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {Subscription} subscription Payment Related Functions.
- * @property {Customer} [customer] Customer Related Functions.
- * @property {Merchant} [merchant] Merchant Related Functions.
- * @property {Session} [session] Session Related Functions.
+ * @property {Card} card Card related functions.
+ * @property {Payment} payment Payment related functions.
+ * @property {Subscription} subscription Payment related functions.
+ * @property {Customer} [customer] Customer related functions.
+ * @property {Merchant} [merchant] Merchant related functions.
+ * @property {Order} [order] Order related functions.
+ * @property {Session} [session] Session related functions.
  */
 export interface SuperGatewayFrontend {
    card: Card;
@@ -304,6 +307,7 @@ export interface SuperGatewayFrontend {
    subscription: Subscription;
    customer?: Customer;
    merchant?: Merchant;
+   order?: Order;
    session?: Session;
 }
 
@@ -401,6 +405,23 @@ export interface SuperOrder {
    reference: string;
    description: string;
    items: Object[];
+}
+
+
+/**
+ * @typedef {Function} CreateOrder
+ * @param {SuperOrder} order order information.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {object} Created order.
+ */
+type CreateOrder = (order: SuperOrder, xAccessToken?: string) => Object;
+
+/**
+ * @typedef {Object} Order
+ * @property {CreateOrder} create Create order.
+ */
+export interface Order {
+   create: CreateOrder;
 }
 
 

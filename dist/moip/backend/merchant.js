@@ -41,11 +41,8 @@ let Merchant = module.exports = {
                         if (index > 1) lastName += " ";
                         if (index > 0) lastName += part;
                     });
-                    merchant.document = {
-                        type: "CPF",
-                        number: "686.336.690-80"
-                        /* Sender information */
-                    };let data = {
+                    /* Sender information */
+                    let data = {
                         type: "MERCHANT",
                         transparentAccount: false,
                         email: { address: merchant.email },

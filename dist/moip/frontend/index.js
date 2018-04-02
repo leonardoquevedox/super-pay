@@ -10,7 +10,9 @@ let Config = require("./config");
 let Card = require("./card");
 let Customer = require("./customer");
 let Merchant = require("./merchant");
+let Order = require("./order");
 let Payment = require("./payment");
+let Subscriber = require("./subscriber");
 let Subscription = require("./subscription");
 
 let config = {};
@@ -22,8 +24,12 @@ let Frontend = module.exports = {
     customer: Customer,
     /* Merchant Related Functions */
     merchant: Merchant,
+    /* Order Related Functions */
+    order: Order,
     /* Payment Related Functions */
     payment: Payment,
+    /* Subscriber Related Functions */
+    subscriber: Subscriber,
     /* Subscription Related Functions */
     subscription: Subscription,
     /* Initialization function */
@@ -36,7 +42,9 @@ let Frontend = module.exports = {
                     Card.init(options);
                     Customer.init(options);
                     Merchant.init(options);
+                    Order.init(options);
                     Payment.init(options);
+                    Subscriber.init(options);
                     Subscription.init(options);
                 });
 
