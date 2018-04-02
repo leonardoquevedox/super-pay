@@ -2,6 +2,7 @@
 let BackendConfig = require('./config');
 let CardBackend = require('./card');
 let CustomerBackend = require('./customer');
+let MerchantBackend = require('./merchant');
 let PaymentBackend = require('./payment');
 let SubscriptionBackend = require('./subscription');
 
@@ -12,6 +13,8 @@ let Backend = module.exports = {
     card: CardBackend,
     /* Backend Customer Related Functions */
     customer: CustomerBackend,
+    /* Backend Merchant Related Functions */
+    merchant: MerchantBackend,
     /* Backend Payment Related Functions */
     payment: PaymentBackend,
     /* Backend Subscription Related Functions */
@@ -23,6 +26,7 @@ let Backend = module.exports = {
             config = BackendConfig.init(options);
             CardBackend.init(options);
             CustomerBackend.init(options);
+            MerchantBackend.init(options);
             PaymentBackend.init(options);
             SubscriptionBackend.init(options);
             resolve(config);

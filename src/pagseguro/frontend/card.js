@@ -13,9 +13,6 @@ let Config = require("./config");
 let Utils = require("./utils");
 let CardUtils = require("../../utils/card.utils");
 
-let formatCardNumber = (number) => {
-    return number.replace(/ /g, "");
-};
 /* let dev_card_brand_url = `${config.images_url}/payment-methods-flags/42x20`; */
 
 let config = {};
@@ -29,7 +26,7 @@ let Card = module.exports = {
         return new Promise((resolve, reject) => {
             if (card.brand) card.brand = card.brand.toLowerCase();
             PagSeguroDirectPayment.createCardToken({
-                number: formatCardNumber(card.number),
+                number: CardUtils.numbersOnly(card.number),
                 brand: card.brand,
                 cvv: card.cvv,
                 expirationMonth: card.expirationMonth,

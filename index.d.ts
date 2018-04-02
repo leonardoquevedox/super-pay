@@ -51,7 +51,7 @@ export class SuperPay {
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
-export var querystring: any;
+export var PhoneNumber: any;
 
 /**
  * @author @vranahub.
@@ -67,7 +67,7 @@ export const base64: any;
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
-export var PhoneNumber: any;
+export var querystring: any;
 
 /**
  * @author @vranahub.
@@ -145,6 +145,14 @@ export interface SuperCardToken {
 type CreateCard = (card: SuperCard, xAccessToken?: string) => any;
 
 /**
+ * @typedef {Function} DeleteCard
+ * @param {SuperId} id Customer id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperCard>}
+ */
+type DeleteCard = (id: SuperId, xAccessToken?: string) => SuperCard[];
+
+/**
  * @typedef {Object} CardExpirationOptions
  * @property {Array<string>} months Expiration months.
  * @property {Array<string>} years Expiration years.
@@ -173,11 +181,13 @@ type ListCards = (id: SuperId, xAccessToken?: string) => SuperCard[];
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
  * @property {CreateCard} create Create Card on Gateway.
- * @property {ListCards} [list] List user payments.
+ * @property {DeleteCard} [delete] Delete card.
+ * @property {ListCards} [list] List user cards.
  */
 export interface Card {
    getExpirationOptions: GetExpirationOptions;
    create: CreateCard;
+   delete?: DeleteCard;
    list?: ListCards;
 }
 
@@ -266,6 +276,7 @@ export interface Customer {
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
  * @property {Customer} [customer] Customer Related Functions.
+ * @property {Merchant} [merchant] Merchant Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface SuperGatewayBackend {
@@ -273,6 +284,7 @@ export interface SuperGatewayBackend {
    payment: Payment;
    subscription: Subscription;
    customer?: Customer;
+   merchant?: Merchant;
    session?: Session;
 }
 
@@ -283,6 +295,7 @@ export interface SuperGatewayBackend {
  * @property {Payment} payment Payment Related Functions.
  * @property {Subscription} subscription Payment Related Functions.
  * @property {Customer} [customer] Customer Related Functions.
+ * @property {Merchant} [merchant] Merchant Related Functions.
  * @property {Session} [session] Session Related Functions.
  */
 export interface SuperGatewayFrontend {
@@ -290,6 +303,7 @@ export interface SuperGatewayFrontend {
    payment: Payment;
    subscription: Subscription;
    customer?: Customer;
+   merchant?: Merchant;
    session?: Session;
 }
 
@@ -347,6 +361,33 @@ export interface SuperBuyer {
    birthDate: string;
    address: SuperAddress;
    document: SuperDocument;
+}
+
+
+/**
+ * @typedef {Function} CreateMerchant
+ * @param {SuperBuyer} card Merchant information.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {any} Created card information.
+ */
+type CreateMerchant = (card: SuperBuyer, xAccessToken?: string) => any;
+
+/**
+ * @typedef {Function} ListMerchants
+ * @param {SuperId} id Merchant id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperBuyer>}
+ */
+type ListMerchants = (id: SuperId, xAccessToken?: string) => SuperBuyer[];
+
+/**
+ * @typedef {Object} Merchant
+ * @property {CreateMerchant} create Create Merchant on Gateway.
+ * @property {ListMerchants} [list] List user payments.
+ */
+export interface Merchant {
+   create: CreateMerchant;
+   list?: ListMerchants;
 }
 
 

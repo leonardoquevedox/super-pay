@@ -26,7 +26,7 @@ let Card = module.exports = {
         config = Config.init(options); // Initialize module.
         return Card; // Returns the module.
     },
-    create: async (card) => {
+    create: async (card, xAccessToken) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reqConfig = { headers: {} };
@@ -34,6 +34,19 @@ let Card = module.exports = {
                 let tokenize_card_url = `${config.server_url}/card`;
                 let tokenized = (await axios.post(tokenize_card_url, card, reqConfig)).data;
                 resolve(tokenized);
+            } catch (e) {
+                ErrorUtils.handle(reject, e);
+            }
+        });
+    },
+    delete: async (card, xAccessToken) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let reqConfig = { headers: {} };
+                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
+                let delete_card_url = `${config.server_url}/card/${card.id}`;
+                let deleted = (await axios.delete(delete_card_url, reqConfig)).data;
+                resolve(deleted);
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }

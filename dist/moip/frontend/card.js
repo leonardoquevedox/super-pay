@@ -31,7 +31,7 @@ let Card = module.exports = {
         return Card; // Returns the module.
     },
     create: (() => {
-        var _ref = _asyncToGenerator(function* (card) {
+        var _ref = _asyncToGenerator(function* (card, xAccessToken) {
             return new Promise((() => {
                 var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                     try {
@@ -45,20 +45,45 @@ let Card = module.exports = {
                     }
                 });
 
-                return function (_x2, _x3) {
+                return function (_x3, _x4) {
                     return _ref2.apply(this, arguments);
                 };
             })());
         });
 
-        return function create(_x) {
+        return function create(_x, _x2) {
             return _ref.apply(this, arguments);
         };
     })(),
-    list: (() => {
-        var _ref3 = _asyncToGenerator(function* (customer, xAccessToken) {
+    delete: (() => {
+        var _ref3 = _asyncToGenerator(function* (card, xAccessToken) {
             return new Promise((() => {
                 var _ref4 = _asyncToGenerator(function* (resolve, reject) {
+                    try {
+                        let reqConfig = { headers: {} };
+                        if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
+                        let delete_card_url = `${config.server_url}/card/${card.id}`;
+                        let deleted = (yield axios.delete(delete_card_url, reqConfig)).data;
+                        resolve(deleted);
+                    } catch (e) {
+                        ErrorUtils.handle(reject, e);
+                    }
+                });
+
+                return function (_x7, _x8) {
+                    return _ref4.apply(this, arguments);
+                };
+            })());
+        });
+
+        return function _delete(_x5, _x6) {
+            return _ref3.apply(this, arguments);
+        };
+    })(),
+    list: (() => {
+        var _ref5 = _asyncToGenerator(function* (customer, xAccessToken) {
+            return new Promise((() => {
+                var _ref6 = _asyncToGenerator(function* (resolve, reject) {
                     try {
                         let reqConfig = { headers: {} };
                         if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
@@ -70,23 +95,23 @@ let Card = module.exports = {
                     }
                 });
 
-                return function (_x6, _x7) {
-                    return _ref4.apply(this, arguments);
+                return function (_x11, _x12) {
+                    return _ref6.apply(this, arguments);
                 };
             })());
         });
 
-        return function list(_x4, _x5) {
-            return _ref3.apply(this, arguments);
+        return function list(_x9, _x10) {
+            return _ref5.apply(this, arguments);
         };
     })(),
     getExpirationOptions: (() => {
-        var _ref5 = _asyncToGenerator(function* () {
+        var _ref7 = _asyncToGenerator(function* () {
             return CardUtils.initExpirationDates();
         });
 
         return function getExpirationOptions() {
-            return _ref5.apply(this, arguments);
+            return _ref7.apply(this, arguments);
         };
     })()
 };

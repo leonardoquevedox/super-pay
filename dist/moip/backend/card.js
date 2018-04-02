@@ -8,12 +8,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  * @version 0.0.5
  * Module for integrating with the Pay U payment service throught Node.js.
  */
-let querystring = require('querystring');
-let axios = require("axios");
+let PhoneNumber = require("awesome-phonenumber");
+let querystring = require("querystring");
 let Promise = require("bluebird");
+let ip = require("ip");
+let axios = require("axios");
+let md5 = require("md5");
+const countries = require("i18n-iso-countries");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");
+let CardUtils = require("../../utils/card.utils");
 
 let Customer = require("./customer");
 let Config = require("./config");
@@ -39,19 +44,20 @@ let Card = module.exports = {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let phone = new PhoneNumber(card.holder.phone, "BR").getNumber("significant");
-                    let birthDate = (card.holder.birthDate || "").replace(/\//g, "-");
+                    let birthDate = (card.holder.birthDate ? new Date(card.holder.birthDate) : new Date()).toISOString().split("T")[0];;
                     /* Payment instrument */
                     let data = {
                         method: "CREDIT_CARD",
                         creditCard: {
-                            number: formatCardNumber(card.number),
+                            ownId: card.reference,
+                            number: yield CardUtils.numbersOnly(card.number),
                             cvv: card.cvv,
                             expirationMonth: card.expirationMonth,
                             expirationYear: card.expirationYear,
                             holder: {
                                 fullname: card.holder.name,
                                 email: card.holder.email,
-                                birthDate: birthDate,
+                                birthdate: birthDate,
                                 phone: {
                                     countryCode: "55",
                                     areaCode: phone ? phone.substring(0, 2) : undefined,
@@ -71,7 +77,7 @@ let Card = module.exports = {
                             "Authorization": `Basic ${Config.base64Auth}`
                         }
                     })).data;
-                    resolve(response);
+                    resolve(response.creditCard);
                 } catch (e) {
                     ErrorUtils.handle(reject, e);
                 }
@@ -82,12 +88,12 @@ let Card = module.exports = {
             };
         })());
     },
-    delete: id => {
+    delete: card => {
         return new Promise((() => {
             var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {
-                    let url = `${Config.gateway_url}/v2/fundinginstruments/${id}`;
-                    let response = (yield axios.delete(url, data, {
+                    let url = `${Config.gateway_url}/v2/fundinginstruments/${card.id}`;
+                    let response = (yield axios.delete(url, {
                         headers: {
                             "Authorization": `Basic ${Config.base64Auth}`
                         }

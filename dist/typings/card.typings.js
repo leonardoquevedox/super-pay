@@ -29,27 +29,35 @@
  */
 
 /**
+ * @typedef {Function} DeleteCard
+ * @param {SuperId} id Customer id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperCard>}
+ */
+
+/**
  * @typedef {Object} CardExpirationOptions
  * @property {Array<string>} months Expiration months.
  * @property {Array<string>} years Expiration years.
  */
 
 /**
-* @typedef {Function} GetExpirationOptions
-* @returns {CardExpirationOptions} months Expiration months.
-*/
+ * @typedef {Function} GetExpirationOptions
+ * @returns {CardExpirationOptions} months Expiration months.
+ */
 
 /**
-* @typedef {Function} ListCards
-* @param {SuperId} id Customer id.
-* @param {string} [xAccessToken] Server access token.
-* @returns {Array<SuperCard>}
-*/
+ * @typedef {Function} ListCards
+ * @param {SuperId} id Customer id.
+ * @param {string} [xAccessToken] Server access token.
+ * @returns {Array<SuperCard>}
+ */
 
 /**
  * @typedef {Object} Card
  * @property {GetExpirationOptions} getExpirationOptions Card expiration years and months (generated at runtime).
  * @property {CreateCard} create Create Card on Gateway.
- * @property {ListCards} [list] List user payments.
+ * @property {DeleteCard} [delete] Delete card.
+ * @property {ListCards} [list] List user cards.
  */
 "use strict";

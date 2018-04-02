@@ -7,6 +7,9 @@ let CardInfo = require("@polvo-labs/card-type");
 let Utils = require("../utils/utils");
 
 let CardUtils = module.exports = {
+    numbersOnly: async (cardNumber) => {
+        return cardNumber.replace(/ /g, "");
+    },
     initExpirationDates: async () => {
         return new Promise((resolve, reject) => {
             let expiration = {

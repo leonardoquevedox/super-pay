@@ -11,8 +11,17 @@ let CardInfo = require("@polvo-labs/card-type");
 let Utils = require("../utils/utils");
 
 let CardUtils = module.exports = {
+    numbersOnly: (() => {
+        var _ref = _asyncToGenerator(function* (cardNumber) {
+            return cardNumber.replace(/ /g, "");
+        });
+
+        return function numbersOnly(_x) {
+            return _ref.apply(this, arguments);
+        };
+    })(),
     initExpirationDates: (() => {
-        var _ref = _asyncToGenerator(function* () {
+        var _ref2 = _asyncToGenerator(function* () {
             return new Promise(function (resolve, reject) {
                 let expiration = {
                     months: [],
@@ -29,7 +38,7 @@ let CardUtils = module.exports = {
         });
 
         return function initExpirationDates() {
-            return _ref.apply(this, arguments);
+            return _ref2.apply(this, arguments);
         };
     })()
 };
