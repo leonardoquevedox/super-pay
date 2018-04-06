@@ -23,10 +23,10 @@ let Card = module.exports = {
         return Card; // Returns the module.
     },
     create: async (card) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             if (card.brand) card.brand = card.brand.toLowerCase();
             PagSeguroDirectPayment.createCardToken({
-                number: CardUtils.numbersOnly(card.number),
+                cardNumber: await CardUtils.numbersOnly(card.number),
                 brand: card.brand,
                 cvv: card.cvv,
                 expirationMonth: card.expirationMonth,

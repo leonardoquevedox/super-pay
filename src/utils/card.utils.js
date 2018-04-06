@@ -8,7 +8,9 @@ let Utils = require("../utils/utils");
 
 let CardUtils = module.exports = {
     numbersOnly: async (cardNumber) => {
-        return cardNumber.replace(/ /g, "");
+        return new Promise((resolve, reject) => {
+            resolve(cardNumber.replace(/ /g, ""));
+        });
     },
     initExpirationDates: async () => {
         return new Promise((resolve, reject) => {

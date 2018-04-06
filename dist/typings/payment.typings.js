@@ -2,7 +2,8 @@
  * @typedef {Object} SuperPayment
  * @property {SuperCard|SuperCardToken} instrument Payment instrument.
  * @property {SuperBuyer} buyer Payment buyer information.
- * @property {number} amount Payment currency code (Three letters).
+ * @property {number} amount Payment amount in float format.
+ * @property {number} installments Payment installments number.
  * @property {string} reference Payment reference on your database.
  * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
  * @property {string} method The method (credit, debit, boleto) with which the payment will be processed.

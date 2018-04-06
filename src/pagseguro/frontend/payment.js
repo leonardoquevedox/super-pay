@@ -20,20 +20,7 @@ let Payment = module.exports = {
         config = Config.init(options);
         return Payment;
     },
-    create(payment) {
-        return new Promise(async (resolve, reject) => {
-            let data = {
-                hash: PagSeguroDirectPayment.getSenderHash(),
-                items: payment.items,
-                token: payment.creditCard.token,
-                method: payment.method,
-                total: payment.amount
-            };
-            let response = await axios.post(`${config.server_url}/payment`);
-            resolve(response);
-        });
-    },
-    getPaymentMethods(amount) {
+    getPaymentMethods: async (amount) => {
         return new Promise((resolve, reject) => {
             PagSeguroDirectPayment.getPaymentMethods({
                 amount: amount,
@@ -44,6 +31,19 @@ let Payment = module.exports = {
                     reject(error)
                 },
             });
+        });
+    },
+    create: async (payment) => {
+        return new Promise(async (resolve, reject) => {
+            let data = {
+                hash: PagSeguroDirectPayment.getSenderHash(),
+                items: payment.items,
+                token: payment.creditCard.token,
+                method: payment.method,
+                total: payment.amount
+            };
+            let response = await axios.post(`${config.server_url}/payment`);
+            resolve(response);
         });
     }
 }

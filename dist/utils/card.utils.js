@@ -13,7 +13,9 @@ let Utils = require("../utils/utils");
 let CardUtils = module.exports = {
     numbersOnly: (() => {
         var _ref = _asyncToGenerator(function* (cardNumber) {
-            return cardNumber.replace(/ /g, "");
+            return new Promise(function (resolve, reject) {
+                resolve(cardNumber.replace(/ /g, ""));
+            });
         });
 
         return function numbersOnly(_x) {

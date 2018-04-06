@@ -30,13 +30,29 @@ let Payment = module.exports = {
             try {
                 /* Payment information */
                 let data = {
-                    /* Transaction information */
-                    mode: "default",
-                    currency: transaction.currency,
-                    reference: transaction.reference,
-                    notificationURL: ip.address() + "/payment/update",
+                    installmentCount: transaction.installments || 1,
+                    statementDescriptor: transaction.description,
                 };
-                resolve(parsed);
+                /* Payment instrument */
+                if (transaction.instrument && transaction.instrument.creditCard && transaction.instrument.creditCard.id) {
+                    data.fundingInstrument = {
+                        creditCard: {
+                            id: transaction.instrument.creditCard.id
+                        }
+                    };
+                };
+                /* Order information */
+                if (type == Payment.ORDER) {
+                    data.order_id = transaction.order.id;
+                };
+                let url = type == Payment.ORDER ? `${Config.gateway_url}/v2/orders/${data.order_id}/payments` : `${Config.gateway_url}/v2/orders/${data.order_id}/payments`;
+                let response = (await axios.post(url, data, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Basic ${Config.base64Auth}`
+                    }
+                })).data;
+                resolve(response);
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }

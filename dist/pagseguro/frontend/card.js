@@ -28,22 +28,28 @@ let Card = module.exports = {
     },
     create: (() => {
         var _ref = _asyncToGenerator(function* (card) {
-            return new Promise(function (resolve, reject) {
-                if (card.brand) card.brand = card.brand.toLowerCase();
-                PagSeguroDirectPayment.createCardToken({
-                    number: CardUtils.numbersOnly(card.number),
-                    brand: card.brand,
-                    cvv: card.cvv,
-                    expirationMonth: card.expirationMonth,
-                    expirationYear: card.expirationYear,
-                    success: function (response) {
-                        resolve({ token: response.card.token });
-                    },
-                    error: function (error) {
-                        reject(error);
-                    }
+            return new Promise((() => {
+                var _ref2 = _asyncToGenerator(function* (resolve, reject) {
+                    if (card.brand) card.brand = card.brand.toLowerCase();
+                    PagSeguroDirectPayment.createCardToken({
+                        cardNumber: yield CardUtils.numbersOnly(card.number),
+                        brand: card.brand,
+                        cvv: card.cvv,
+                        expirationMonth: card.expirationMonth,
+                        expirationYear: card.expirationYear,
+                        success: function (response) {
+                            resolve({ token: response.card.token });
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
                 });
-            });
+
+                return function (_x2, _x3) {
+                    return _ref2.apply(this, arguments);
+                };
+            })());
         });
 
         return function create(_x) {
@@ -51,12 +57,12 @@ let Card = module.exports = {
         };
     })(),
     getExpirationOptions: (() => {
-        var _ref2 = _asyncToGenerator(function* () {
+        var _ref3 = _asyncToGenerator(function* () {
             return CardUtils.initExpirationDates();
         });
 
         return function getExpirationOptions() {
-            return _ref2.apply(this, arguments);
+            return _ref3.apply(this, arguments);
         };
     })()
 };
