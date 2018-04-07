@@ -59,7 +59,7 @@ export var PhoneNumber: any;
  * @version 0.0.5
  * Module for integrating with the PagSeguro payment service throught Node.js.
  */
-export var base64: any;
+export const base64: any;
 
 /**
  * @author @vranahub.

@@ -24,36 +24,48 @@ let Payment = module.exports = {
         config = Config.init(options);
         return Payment;
     },
-    create(payment) {
-        return new Promise((() => {
-            var _ref = _asyncToGenerator(function* (resolve, reject) {
-                let data = {
-                    hash: PagSeguroDirectPayment.getSenderHash(),
-                    items: payment.items,
-                    token: payment.creditCard.token,
-                    method: payment.method,
-                    total: payment.amount
-                };
-                let response = yield axios.post(`${config.server_url}/payment`);
-                resolve(response);
-            });
-
-            return function (_x, _x2) {
-                return _ref.apply(this, arguments);
-            };
-        })());
-    },
-    getPaymentMethods(amount) {
-        return new Promise((resolve, reject) => {
-            PagSeguroDirectPayment.getPaymentMethods({
-                amount: amount,
-                success: response => {
-                    resolve(response.paymentMethods);
-                },
-                error: error => {
-                    reject(error);
-                }
+    getPaymentMethods: (() => {
+        var _ref = _asyncToGenerator(function* (amount) {
+            return new Promise(function (resolve, reject) {
+                PagSeguroDirectPayment.getPaymentMethods({
+                    amount: amount,
+                    success: function (response) {
+                        resolve(response.paymentMethods);
+                    },
+                    error: function (error) {
+                        reject(error);
+                    }
+                });
             });
         });
-    }
+
+        return function getPaymentMethods(_x) {
+            return _ref.apply(this, arguments);
+        };
+    })(),
+    create: (() => {
+        var _ref2 = _asyncToGenerator(function* (payment) {
+            return new Promise((() => {
+                var _ref3 = _asyncToGenerator(function* (resolve, reject) {
+                    let data = {
+                        hash: PagSeguroDirectPayment.getSenderHash(),
+                        items: payment.items,
+                        token: payment.creditCard.token,
+                        method: payment.method,
+                        total: payment.amount
+                    };
+                    let response = yield axios.post(`${config.server_url}/payment`);
+                    resolve(response);
+                });
+
+                return function (_x3, _x4) {
+                    return _ref3.apply(this, arguments);
+                };
+            })());
+        });
+
+        return function create(_x2) {
+            return _ref2.apply(this, arguments);
+        };
+    })()
 };

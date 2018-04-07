@@ -1,12 +1,13 @@
 {
   "name": "super-pay",
-  "version": "0.9.9-dev-186",
+  "version": "0.9.9-dev-188",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clear:dist": "node .bin/empty-dist",
-    "build": "jsdoc -t node_modules/jsdoc2dts -r src && npm run clear:dist && babel src -d dist",
+    "build": "npm run clear:dist && babel src -d dist && npm run generate:docs",
+    "generate:docs": "jsdoc -t node_modules/jsdoc2dts -r src",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -41,12 +42,12 @@
     "xml-js": "^1.6.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-bluebird": "^0.1.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "jsdoc2dts": "^1.0.0"
+    "jsdoc2dts": "^1.0.5"
   }
 }
