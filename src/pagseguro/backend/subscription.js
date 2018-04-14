@@ -69,7 +69,7 @@ let Subscription = module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 let created = await PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
-                resolve(created.directPreApproval.code._text);
+                resolve({ id: created.directPreApproval.code._text });
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }

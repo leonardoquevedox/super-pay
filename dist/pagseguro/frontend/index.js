@@ -28,13 +28,18 @@ let Frontend = module.exports = {
         var _ref = _asyncToGenerator(function* (options) {
             return new Promise((() => {
                 var _ref2 = _asyncToGenerator(function* (resolve, reject) {
-                    options = options || {};
-                    config = Config.init(options);
-                    yield Utils.loadLib(config.lib_url);
-                    yield Session.init(options);
-                    Card.init(options);
-                    Payment.init(options);
-                    Subscription.init(options);
+                    try {
+                        options = options || {};
+                        config = Config.init(options);
+                        yield Utils.loadLib(config.lib_url);
+                        yield Session.init(options);
+                        Card.init(options);
+                        Payment.init(options);
+                        Subscription.init(options);
+                        resolve(Frontend);
+                    } catch (e) {
+                        reject(e);
+                    }
                 });
 
                 return function (_x2, _x3) {

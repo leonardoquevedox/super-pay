@@ -35,15 +35,19 @@ let Payment = module.exports = {
     },
     create: async (payment) => {
         return new Promise(async (resolve, reject) => {
-            let data = {
-                hash: PagSeguroDirectPayment.getSenderHash(),
-                items: payment.items,
-                token: payment.creditCard.token,
-                method: payment.method,
-                total: payment.amount
-            };
-            let response = await axios.post(`${config.server_url}/payment`);
-            resolve(response);
+            try {
+                let data = {
+                    hash: PagSeguroDirectPayment.getSenderHash(),
+                    items: payment.items,
+                    token: payment.creditCard.token,
+                    method: payment.method,
+                    total: payment.amount
+                };
+                let response = await axios.post(`${config.server_url}/payment`);
+                resolve(response);
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 }

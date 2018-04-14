@@ -43,6 +43,7 @@ let Card = module.exports = {
         return new Promise((() => {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
+                    let cvv = card.cvv;
                     let phone = new PhoneNumber(card.holder.phone, "BR").getNumber("significant");
                     let birthDate = (card.holder.birthDate ? new Date(card.holder.birthDate) : new Date()).toISOString().split("T")[0];;
                     /* Payment instrument */
@@ -51,7 +52,7 @@ let Card = module.exports = {
                         creditCard: {
                             ownId: card.reference,
                             number: yield CardUtils.numbersOnly(card.number),
-                            cvv: card.cvv,
+                            cvc: card.cvv,
                             expirationMonth: card.expirationMonth,
                             expirationYear: card.expirationYear,
                             holder: {
@@ -77,7 +78,7 @@ let Card = module.exports = {
                             "Authorization": `Basic ${Config.base64Auth}`
                         }
                     })).data;
-                    resolve(response.creditCard);
+                    resolve(Object.assign(response.creditCard, { cvv: cvv }));
                 } catch (e) {
                     ErrorUtils.handle(reject, e);
                 }

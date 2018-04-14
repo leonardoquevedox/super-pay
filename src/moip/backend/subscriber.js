@@ -32,22 +32,18 @@ let Subscriber = module.exports = {
                     subscriber.address.country = countries.toAlpha3(subscriber.address.country);
                 /* Sender information */
                 let data = {
-                    ownId: subscriber.reference,
+                    code: subscriber.reference,
                     fullname: subscriber.name,
                     email: subscriber.email,
-                    birthDate: birthDate,
-                    phone: {
-                        countryCode: "55",
-                        areaCode: phone ? phone.substring(0, 2) : undefined,
-                        number: phone ? phone.substring(2, phone.length - 1) : undefined
-                    },
-                    taxDocument: {
-                        type: subscriber.document.type,
-                        number: subscriber.document.number ? subscriber.document.number.replace(/[^\d]/g, "") : undefined
-                    },
-                    shippingAddress: {
+                    phone_area_code: phone ? phone.substring(0, 2) : undefined,
+                    phone_number: phone ? phone.substring(2, phone.length - 1) : undefined,
+                    birth_day: birthDate.substring(0, 2),
+                    birthdate_month: birthDate.substring(3, 5),
+                    birthdate_year: birthDate.substring(6, 10),
+                    cpf: subscriber.document.number ? subscriber.document.number.replace(/[^\d]/g, "") : undefined,
+                    address: {
                         street: subscriber.address.street ? subscriber.address.street.split(",")[0] : "",
-                        streetNumber: subscriber.address.number,
+                        number: subscriber.address.number,
                         complement: subscriber.address.complement,
                         district: subscriber.address.neighbourhood,
                         city: subscriber.address.city,
@@ -56,7 +52,7 @@ let Subscriber = module.exports = {
                         zipCode: subscriber.address.postalCode ? subscriber.address.postalCode.replace(/[^\d]/g, "") : undefined,
                     }
                 };
-                let url = `${Config.gateway_url}/v2/subscribers`;
+                let url = `${Config.gateway_url}/assinaturas/v1/customers?new_vault=false`;
                 let response = (await axios.post(url, data, {
                     headers: {
                         "Content-Type": "application/json",
@@ -72,7 +68,7 @@ let Subscriber = module.exports = {
     read: (id) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let url = `${Config.gateway_url}/v2/subscribers/${id}`;
+                let url = `${Config.gateway_url}/assinaturas/v1/customers/${id}`;
                 let response = (await axios.get(url, {
                     headers: {
                         "Content-Type": "application/json",
@@ -88,7 +84,7 @@ let Subscriber = module.exports = {
     list: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                let url = `${Config.gateway_url}/v2/subscribers`;
+                let url = `${Config.gateway_url}/assinaturas/v1/customers`;
                 let response = (await axios.get(url, {
                     headers: {
                         "Content-Type": "application/json",

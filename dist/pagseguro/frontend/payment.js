@@ -47,15 +47,19 @@ let Payment = module.exports = {
         var _ref2 = _asyncToGenerator(function* (payment) {
             return new Promise((() => {
                 var _ref3 = _asyncToGenerator(function* (resolve, reject) {
-                    let data = {
-                        hash: PagSeguroDirectPayment.getSenderHash(),
-                        items: payment.items,
-                        token: payment.creditCard.token,
-                        method: payment.method,
-                        total: payment.amount
-                    };
-                    let response = yield axios.post(`${config.server_url}/payment`);
-                    resolve(response);
+                    try {
+                        let data = {
+                            hash: PagSeguroDirectPayment.getSenderHash(),
+                            items: payment.items,
+                            token: payment.creditCard.token,
+                            method: payment.method,
+                            total: payment.amount
+                        };
+                        let response = yield axios.post(`${config.server_url}/payment`);
+                        resolve(response);
+                    } catch (e) {
+                        reject(e);
+                    }
                 });
 
                 return function (_x3, _x4) {

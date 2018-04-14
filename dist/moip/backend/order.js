@@ -50,6 +50,7 @@ let Order = module.exports = {
         return new Promise((() => {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
+                    transaction.order.shipping = transaction.order.shipping || 0;
                     if (transaction.receivers) {
                         transaction.receivers.map(function (receiver, index) {
                             let amount = receiver.fee || transaction.amount * (receiver.percentage * 100);
@@ -69,9 +70,7 @@ let Order = module.exports = {
                         "ownId": transaction.reference,
                         "amount": {
                             "currency": transaction.currency,
-                            "subtotals": {
-                                "shipping": transaction.order.shipping
-                            }
+                            "subtotals": {}
                         },
                         "items": [{
                             "product": transaction.order.description,
@@ -83,6 +82,9 @@ let Order = module.exports = {
                         },
                         receivers: transaction.receivers
                     };
+                    if (transaction.order.shipping > 0) {
+                        data.amount.subtotals.shipping = transaction.order.shipping;
+                    }
                     let url = `${Config.gateway_url}/v2/orders`;
                     let response = (yield axios.post(url, data, {
                         headers: {

@@ -37,8 +37,10 @@ let Subscription = module.exports = {
         return new Promise((() => {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
+                    let reqConfig = { headers: {} };
+                    if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                     let create_plan_url = `${config.server_url}/subscription/plan`;
-                    let created = (yield axios.post(create_plan_url, plan)).data;
+                    let created = (yield axios.post(create_plan_url, plan, reqConfig)).data;
                     resolve(created);
                 } catch (e) {
                     ErrorUtils.handle(reject, e);
@@ -54,9 +56,10 @@ let Subscription = module.exports = {
         return new Promise((() => {
             var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {
-                    data.buyer.hash = PagSeguroDirectPayment.getSenderHash();
+                    let reqConfig = { headers: {} };
+                    if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                     let subscribe_plan_url = `${config.server_url}/subscription/subscribe`;
-                    let subscribed = (yield axios.post(subscribe_plan_url, data)).data;
+                    let subscribed = (yield axios.post(subscribe_plan_url, data, reqConfig)).data;
                     resolve(subscribed);
                 } catch (e) {
                     ErrorUtils.handle(reject, e);

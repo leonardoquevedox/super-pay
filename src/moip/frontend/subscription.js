@@ -26,8 +26,10 @@ let Subscription = module.exports = {
     createPlan: (plan) => {
         return new Promise(async (resolve, reject) => {
             try {
+                let reqConfig = { headers: {} };
+                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                 let create_plan_url = `${config.server_url}/subscription/plan`;
-                let created = (await axios.post(create_plan_url, plan)).data;
+                let created = (await axios.post(create_plan_url, plan, reqConfig)).data;
                 resolve(created);
             } catch (e) {
                 ErrorUtils.handle(reject, e);
@@ -37,9 +39,10 @@ let Subscription = module.exports = {
     subscribe: (data) => {
         return new Promise(async (resolve, reject) => {
             try {
-                data.buyer.hash = PagSeguroDirectPayment.getSenderHash();
+                let reqConfig = { headers: {} };
+                if (xAccessToken) reqConfig.headers["x-access-token"] = xAccessToken;
                 let subscribe_plan_url = `${config.server_url}/subscription/subscribe`;
-                let subscribed = (await axios.post(subscribe_plan_url, data)).data;
+                let subscribed = (await axios.post(subscribe_plan_url, data, reqConfig)).data;
                 resolve(subscribed);
             } catch (e) {
                 ErrorUtils.handle(reject, e);

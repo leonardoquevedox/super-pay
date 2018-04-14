@@ -42,7 +42,7 @@ let Subscription = module.exports = {
                     let created = (yield axios.post(create_plan_url, plan)).data;
                     resolve(created);
                 } catch (e) {
-                    ErrorUtils.handle(reject, e);
+                    reject(e);
                 }
             });
 
@@ -60,7 +60,7 @@ let Subscription = module.exports = {
                     let subscribed = (yield axios.post(subscribe_plan_url, data)).data;
                     resolve(subscribed);
                 } catch (e) {
-                    ErrorUtils.handle(reject, e);
+                    reject(e);
                 }
             });
 

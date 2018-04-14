@@ -27,14 +27,22 @@ let Session = module.exports = {
     token: "",
     init: (() => {
         var _ref = _asyncToGenerator(function* (options) {
-            try {
-                config = Config.init(options);
-                let token = yield Session.create();
-                PagSeguroDirectPayment.setSessionId(token);
-                return Session;
-            } catch (e) {
-                console.warn(e);
-            }
+            return new Promise((() => {
+                var _ref2 = _asyncToGenerator(function* (resolve, reject) {
+                    try {
+                        config = Config.init(options);
+                        let token = yield Session.create();
+                        PagSeguroDirectPayment.setSessionId(token);
+                        resolve(Session);
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
+
+                return function (_x2, _x3) {
+                    return _ref2.apply(this, arguments);
+                };
+            })());
         });
 
         return function init(_x) {
@@ -43,7 +51,7 @@ let Session = module.exports = {
     })(),
     create: () => {
         return new Promise((() => {
-            var _ref2 = _asyncToGenerator(function* (resolve, reject) {
+            var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let session_url = `${config.server_url}/session`;
                     let sessionToken = (yield axios.get(session_url)).data;
@@ -51,12 +59,12 @@ let Session = module.exports = {
                     PagSeguroDirectPayment.setSessionId(sessionToken);
                     resolve(sessionToken);
                 } catch (e) {
-                    ErrorUtils.handle(reject, e);
+                    reject(e);
                 }
             });
 
-            return function (_x2, _x3) {
-                return _ref2.apply(this, arguments);
+            return function (_x4, _x5) {
+                return _ref3.apply(this, arguments);
             };
         })());
     }

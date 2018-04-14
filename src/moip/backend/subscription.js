@@ -24,42 +24,30 @@ let Subscription = module.exports = {
     createPlan: (plan) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let credentials = Config.getCredentials();
-                if (plan.expiration) plan.expiration.value = parseInt(plan.expiration.split(" ")[0]);
+                if (plan.expiration) plan.expiration.length = parseInt(plan.expiration.split(" ")[0]);
                 if (plan.expiration) plan.expiration.unit = plan.expiration.split(" ")[1];
                 if (plan.expiration && plan.expiration.unit) plan.expiration.unit += (plan.expiration.unit.toLowerCase()[plan.expiration.unit.length - 1] == "s" ? "" : "S");
-                plan.charge_type = plan.charge_manually ? "MANUAL" : "AUTO";
-                let create_url = `${config.gateway_url}/v2/pre-approvals/request`;
+                let create_url = `${config.gateway_url}/assinaturas/v1/plans`;
                 let data = {
-                    preApprovalRequest: {
-                        reference: "FUNKZIE",
-                        preApproval: {
-                            name: plan.name,
-                            charge: plan.charge_type.toUpperCase(),
-                            period: plan.charge_periodicity.toUpperCase(),
-                            amountPerPayment: parseFloat(plan.charge_amount).toFixed(2),
-                        },
-                        receiver: {
-                            email: credentials.email
-                        }
-                    }
+                    code: plan.reference,
+                    name: plan.name,
+                    status: "ACTIVE",
+                    amount: parseFloat(plan.charge_amount).toFixed(2),
                 };
                 if (plan.expiration) Object.assign(data, {
                     expiration: {
-                        value: plan.expiration && plan.expiration.value ? plan.expiration.value.toUpperCase() : undefined,
+                        length: plan.expiration && plan.expiration.value ? plan.expiration.value.toUpperCase() : undefined,
                         unit: plan.expiration && plan.expiration.unit ? plan.expiration.unit.toUpperCase() : undefined
                     }
                 })
-                let body = `<?xml version="1.0" encoding="utf-8"?>\n` + xmlJS.json2xml(data, { compact: true });
-                let url = create_url + `?${querystring.stringify(credentials)}`;
-                let response = (await axios.post(url, body, {
+                let url = `${Config.gateway_url}/assinaturas/v1/plans`;
+                let response = (await axios.post(url, data, {
                     headers: {
-                        "Content-Type": "application/xml;charset=ISO-8859-1"
+                        "Content-Type": "application/json",
+                        "Authorization": `Basic ${Config.base64Auth}`
                     }
                 })).data;
-                let created = xmlJS.xml2js(response, { compact: true });
-                let id = created.preApprovalRequest.code._text;
-                resolve({ id: id });
+                resolve({ id: plan.reference });
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }
@@ -68,8 +56,35 @@ let Subscription = module.exports = {
     subscribe: (subscription) => {
         return new Promise(async (resolve, reject) => {
             try {
-                let created = await PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
-                resolve(created.directPreApproval.code._text);
+                let data = {
+                    code: subscription.reference,
+                    amount: subscription.amount,
+                    payment_method: subscription.method,
+                    plan: {
+                        code: plan.reference
+                    },
+                    customer: {
+                        code: customer.code,
+                    }
+                };
+                let isCreditCardPayment = data.method == "CREDIT_CARD";
+                if (isCreditCardPayment) {
+                    /* Payment method */
+                    credit_card = {
+                        holder_name: subscription.instrument.holder.name,
+                        number: subscription.instrument.number,
+                        expiration_month: subscription.instrument.expirationMonth,
+                        expiration_year: subscription.instrument.expirationYear
+                    };
+                };
+                let url = `${Config.gateway_url}/assinaturas/v1/subscriptions`;
+                let response = (await axios.post(url, data, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Basic ${Config.base64Auth}`
+                    }
+                })).data;
+                resolve({ id: subscription.reference });
             } catch (e) {
                 ErrorUtils.handle(reject, e);
             }

@@ -22,14 +22,16 @@ let config = {};
 let Session = module.exports = {
     token: "",
     init: async (options) => {
-        try {
-            config = Config.init(options);
-            let token = await Session.create();
-            PagSeguroDirectPayment.setSessionId(token);
-            return Session;
-        } catch (e) {
-            console.warn(e);
-        }
+        return new Promise(async (resolve, reject) => {
+            try {
+                config = Config.init(options);
+                let token = await Session.create();
+                PagSeguroDirectPayment.setSessionId(token);
+                resolve(Session);
+            } catch (e) {
+                reject(e);
+            }
+        });
     },
     create: () => {
         return new Promise(async (resolve, reject) => {
@@ -40,7 +42,7 @@ let Session = module.exports = {
                 PagSeguroDirectPayment.setSessionId(sessionToken);
                 resolve(sessionToken);
             } catch (e) {
-                ErrorUtils.handle(reject, e);
+                reject(e);
             }
         });
     }

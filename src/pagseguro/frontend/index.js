@@ -22,13 +22,18 @@ let Frontend = module.exports = {
     /* Initialization function */
     init: async (options) => {
         return new Promise(async (resolve, reject) => {
-            options = options || {};
-            config = Config.init(options);
-            await Utils.loadLib(config.lib_url);
-            await Session.init(options);
-            Card.init(options);
-            Payment.init(options);
-            Subscription.init(options);
+            try {
+                options = options || {};
+                config = Config.init(options);
+                await Utils.loadLib(config.lib_url);
+                await Session.init(options);
+                Card.init(options);
+                Payment.init(options);
+                Subscription.init(options);
+                resolve(Frontend);
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 };

@@ -80,7 +80,7 @@ let Subscription = module.exports = {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let created = yield PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
-                    resolve(created.directPreApproval.code._text);
+                    resolve({ id: created.directPreApproval.code._text });
                 } catch (e) {
                     ErrorUtils.handle(reject, e);
                 }

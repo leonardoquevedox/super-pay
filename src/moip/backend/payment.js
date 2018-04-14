@@ -34,11 +34,10 @@ let Payment = module.exports = {
                     statementDescriptor: transaction.description,
                 };
                 /* Payment instrument */
-                if (transaction.instrument && transaction.instrument.creditCard && transaction.instrument.creditCard.id) {
+                if (transaction.instrument && transaction.instrument.creditCard) {
                     data.fundingInstrument = {
-                        creditCard: {
-                            id: transaction.instrument.creditCard.id
-                        }
+                        method: "CREDIT_CARD",
+                        creditCard: transaction.instrument.creditCard
                     };
                 };
                 /* Order information */
