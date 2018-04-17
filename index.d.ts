@@ -94,6 +94,19 @@ export var Config: any;
 export var Frontend: any;
 
 /**
+ * @typedef {Object} SuperBoleto
+ * @property {number} amount Payment amount in float format.
+ * @property {string} reference Payment reference on your database.
+ * @property {string} method The method (credit, debit, boleto) with which the payment will be processed.
+ */
+export interface SuperBoleto {
+   amount: number;
+   reference: string;
+   method: string;
+}
+
+
+/**
  * @typedef {Object} SuperCardHolder
  * @property {string} name Holder full name.
  * @property {SuperAddress} address Card holder address.
@@ -427,7 +440,7 @@ export interface Order {
 
 /**
  * @typedef {Object} SuperPayment
- * @property {SuperCard|SuperCardToken} instrument Payment instrument.
+ * @property {SuperCard|SuperCardToken|SuperBoleto} instrument Payment instrument.
  * @property {SuperBuyer} buyer Payment buyer information.
  * @property {number} amount Payment amount in float format.
  * @property {number} installments Payment installments number.
@@ -441,7 +454,7 @@ export interface Order {
  * @property {string} [ip] Buyer IP address.
  */
 export interface SuperPayment {
-   instrument: (SuperCard|SuperCardToken);
+   instrument: (SuperCard|SuperCardToken|SuperBoleto);
    buyer: SuperBuyer;
    amount: number;
    installments: number;
@@ -575,16 +588,18 @@ export interface SuperSubscriptionPlan {
 /**
  * @typedef {Function} CreateSubscriptionPlan
  * @param {SuperSubscriptionPlan} plan subscription plan information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {object} Created subscription plan id.
  */
-type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan) => Object;
+type CreateSubscriptionPlan = (plan: SuperSubscriptionPlan, xAccessToken?: string) => Object;
 
 /**
  * @typedef {Function} SubscribeToPlan
  * @param {SuperPayment} subscription subscription payment information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {object} Created subscription plan id.
  */
-type SubscribeToPlan = (subscription: SuperPayment) => Object;
+type SubscribeToPlan = (subscription: SuperPayment, xAccessToken?: string) => Object;
 
 /**
  * @typedef {Object} Subscription

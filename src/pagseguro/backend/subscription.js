@@ -8,6 +8,7 @@ let querystring = require('querystring');
 let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
+let randomstring = require("randomstring");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");
@@ -32,7 +33,7 @@ let Subscription = module.exports = {
                 let create_url = `${config.gateway_url}/v2/pre-approvals/request`;
                 let data = {
                     preApprovalRequest: {
-                        reference: "FUNKZIE",
+                        reference: plan.reference || randomstring.generate({ length: 16 }).toUpperCase(),
                         preApproval: {
                             name: plan.name,
                             charge: plan.charge_type.toUpperCase(),

@@ -23,7 +23,7 @@ let Subscription = module.exports = {
         config = Config.init(options);
         return Subscription;
     },
-    createPlan: (plan) => {
+    createPlan: (plan, xAccessToken) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reqConfig = { headers: {} };
@@ -36,7 +36,7 @@ let Subscription = module.exports = {
             }
         });
     },
-    subscribe: (data) => {
+    subscribe: (data, xAccessToken) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reqConfig = { headers: {} };

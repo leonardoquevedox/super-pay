@@ -33,7 +33,7 @@ let Subscription = module.exports = {
             return _ref.apply(this, arguments);
         };
     })(),
-    createPlan: plan => {
+    createPlan: (plan, xAccessToken) => {
         return new Promise((() => {
             var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
@@ -52,7 +52,7 @@ let Subscription = module.exports = {
             };
         })());
     },
-    subscribe: data => {
+    subscribe: (data, xAccessToken) => {
         return new Promise((() => {
             var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {

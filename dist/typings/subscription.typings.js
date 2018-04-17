@@ -10,12 +10,14 @@
 /**
  * @typedef {Function} CreateSubscriptionPlan
  * @param {SuperSubscriptionPlan} plan subscription plan information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {object} Created subscription plan id.
  */
 
 /**
  * @typedef {Function} SubscribeToPlan
  * @param {SuperPayment} subscription subscription payment information.
+ * @param {string} [xAccessToken] Server access token.
  * @returns {object} Created subscription plan id.
  */
 

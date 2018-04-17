@@ -32,7 +32,7 @@ let Subscription = module.exports = {
                     code: plan.reference,
                     name: plan.name,
                     status: "ACTIVE",
-                    amount: parseFloat(plan.charge_amount).toFixed(2),
+                    amount: parseFloat(plan.charge_amount * 100).toFixed(0),
                 };
                 if (plan.expiration) Object.assign(data, {
                     expiration: {
@@ -58,24 +58,10 @@ let Subscription = module.exports = {
             try {
                 let data = {
                     code: subscription.reference,
-                    amount: subscription.amount,
+                    amount: parseFloat(subscription.charge_amount * 100).toFixed(0),
                     payment_method: subscription.method,
-                    plan: {
-                        code: plan.reference
-                    },
-                    customer: {
-                        code: customer.code,
-                    }
-                };
-                let isCreditCardPayment = data.method == "CREDIT_CARD";
-                if (isCreditCardPayment) {
-                    /* Payment method */
-                    credit_card = {
-                        holder_name: subscription.instrument.holder.name,
-                        number: subscription.instrument.number,
-                        expiration_month: subscription.instrument.expirationMonth,
-                        expiration_year: subscription.instrument.expirationYear
-                    };
+                    plan: { code: subscription.plan.reference },
+                    customer: { code: subscription.customer.reference }
                 };
                 let url = `${Config.gateway_url}/assinaturas/v1/subscriptions`;
                 let response = (await axios.post(url, data, {

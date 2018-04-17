@@ -1,6 +1,6 @@
 /**
  * @typedef {Object} SuperPayment
- * @property {SuperCard|SuperCardToken} instrument Payment instrument.
+ * @property {SuperCard|SuperCardToken|SuperBoleto} instrument Payment instrument.
  * @property {SuperBuyer} buyer Payment buyer information.
  * @property {number} amount Payment amount in float format.
  * @property {number} installments Payment installments number.

@@ -33,15 +33,18 @@ let Subscriber = module.exports = {
                 try {
                     let phone = new PhoneNumber(subscriber.phone, "BR").getNumber("significant");
                     let birthDate = (subscriber.birthDate || "").replace(/\//g, "-");
+                    let expirationYear = subscriber.instrument.expirationYear;
+                    expirationYear = expirationYear.substring(2, 4);
                     if (subscriber.address && subscriber.address.country && subscriber.address.country.length < 3) subscriber.address.country = countries.toAlpha3(subscriber.address.country);
                     /* Sender information */
                     let data = {
+                        id: subscriber.reference,
                         code: subscriber.reference,
                         fullname: subscriber.name,
                         email: subscriber.email,
                         phone_area_code: phone ? phone.substring(0, 2) : undefined,
                         phone_number: phone ? phone.substring(2, phone.length - 1) : undefined,
-                        birth_day: birthDate.substring(0, 2),
+                        birthdate_day: birthDate.substring(0, 2),
                         birthdate_month: birthDate.substring(3, 5),
                         birthdate_year: birthDate.substring(6, 10),
                         cpf: subscriber.document.number ? subscriber.document.number.replace(/[^\d]/g, "") : undefined,
@@ -53,17 +56,28 @@ let Subscriber = module.exports = {
                             city: subscriber.address.city,
                             state: subscriber.address.state,
                             country: subscriber.address.country,
-                            zipCode: subscriber.address.postalCode ? subscriber.address.postalCode.replace(/[^\d]/g, "") : undefined
+                            zipcode: subscriber.address.postalCode ? subscriber.address.postalCode.replace(/[^\d]/g, "") : undefined
                         }
                     };
-                    let url = `${Config.gateway_url}/assinaturas/v1/customers?new_vault=false`;
+                    let instrumentIsCreditCard = subscriber.instrument && subscriber.instrument.expirationMonth;
+                    if (instrumentIsCreditCard) {
+                        data.billing_info = {
+                            credit_card: {
+                                holder_name: subscriber.instrument.holder.name,
+                                number: subscriber.instrument.number.replace(/ /g, ""),
+                                expiration_month: subscriber.instrument.expirationMonth,
+                                expiration_year: expirationYear
+                            }
+                        };
+                    }
+                    let url = `${Config.gateway_url}/assinaturas/v1/customers?new_vault=true`;
                     let response = (yield axios.post(url, data, {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": `Basic ${Config.base64Auth}`
                         }
                     })).data;
-                    resolve(response);
+                    resolve(data);
                 } catch (e) {
                     ErrorUtils.handle(reject, e);
                 }
