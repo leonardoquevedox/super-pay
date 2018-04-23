@@ -1,146 +1,48 @@
 # SuperPay.js
- [IN DEVELOPMENT] [NOT RELATED TO SUPERPAY.ME IN ANY WAY] 
- Brazillian multi-gateway payment library! 
 
-```/**
- * @typedef {Object} SuperAddress
- * @property {string} street Address street.
- * @property {string} neighbourhood Address neighbourhood.
- * @property {string} city Address city.
- * @property {string} state Address state (Two letter code).
- * @property {string} country Address country (Two letter code).
- * @property {string} postalCode Address postal code.
- */
+<!-- [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid) -->
 
-/**
- * @typedef {Object} SuperDocument
- * @property {string} type Either "CPF" or "CNPJ".
- * @property {string} number Document number (can be either formatted or not).
- */
+SuperPay.js is a multi-gateway brazillian payment solution, similiar to PHP's Omnipay.
 
-/**
- * @typedef {Object} SuperCardHolder
- * @property {string} name Holder full name.
- * @property {SuperAddress} address Card holder address.
- * @property {SuperDocument} document Card holder document.
- */
+# Main Features:
+  - Common syntax between gateways
+  - Abstraction of complex gateway concepts
+  - Straight to the point payment flow
+  - Vanilla JS made (with love ❤)
 
-/**
- * @typedef {Object} SuperBuyer
- * @property {string} name Buyer full name.
- * @property {SuperAddress} address Buyer address.
- * @property {SuperDocument} document Buyer document.
- */
+# Why?
 
+The integration process with payment gateways can be quite tricky, specially if you never worked with them before. 
+We strongly believe that payment shouldn't be such a hard to work to implement.
+Since it is interesting for payment gateways to keep complex and specific structures of integration in order to tie you up to their services, we've deviced to change the game!
 
-/**
- * @typedef {Object} SuperPaymentInstrument
- * @property {SuperCard|SuperCardToken|SuperBoleto} instrument The instrument (credit, debit, boleto) whith which the payment will be processed.
- * @property {SuperHolder} [holder] Card holder.
- */
+### Stack
 
-/**
- * @typedef {Object} SuperOrder
- * @property {string} reference Order reference on your database.
- * @property {string} description Order reference on your database.
- * @property {string} currency Order currency code (Three letters).
- * @property {SuperPaymentInstrument} paymentInstrument Order payment instrument.
- * @property {SuperBuyer} buyer Order buyer.
- */
+SuperPay.js uses a number of open source projects (and hopefully will power many more):
 
-/**
- * @typedef {Object} SuperPayment
- * @property {string} country Country Code (Two letters).
- * @property {string} reference Payment reference on your database.
- * @property {string} notificationURL The URL to which the gateway service will postback when the payment updates.
- * @property {string} paymentMethod The method (credit, debit, boleto) with which the payment will be processed.
- * @property {string} [ip] Buyer IP address.
- */
+* [Axios] - HTTP requests should **always** be this easy!
+* [Node.js] - JavaScript powered servers!
 
-/**
- * @typedef {Object} SuperSession
- * @property {string} token Session token.
- */
+And of course SuperPay.js itself is open source with a [public repository][dill] on GitHub.
 
-/**
- * @typedef {Object} Session
- * @property {Function} create Create Session Token.
- */
+### Installation
+
+SuperPay.js requires [Node.js](https://nodejs.org/) v8+ to run.
+
+### Roadmap:
+
+ | PagSeguro | 
+ | Add Night Mode | 
+
+License
+----
+
+MIT
 
 
-/**
- * @typedef {Object} SuperId
- * @property {string} id Item id.
- */
+**Free Software, Hell Yeah!**
 
-/**
- * @typedef {Object} SuperCard
- * @property {string} payerRef Payer reference on your database.
- * @property {string} reference Card reference on your database.
- * @property {string} holder Card Holder (complete name).
- * @property {string} brand Card brand.
- * @property {string} number Card number.
- * @property {Date} expirationDate Card Expiration Date.
- */
-
-/**
- * @typedef {Object} SuperCardToken
- * @property {string} payerRef Payer reference on your database.
- * @property {string} reference Card reference on your database.
- * @property {string} holder Card Holder (complete name).
- * @property {string} brand Card brand.
- * @property {string} token Card number.
- * @property {Date} expirationDate Card Expiration Date .
- */
-
-/**
- * @typedef {Object} Payment
- * @property {function()} list List item.
- * @property {function(SuperPayment)} create Create item.
- * @property {function(SuperId)} read Read item.
- * @property {function(SuperPayment)} update Update item.
- * @property {function(SuperId)} delete Delete item.
- */
-
-/**
- * @typedef {Object} Card
- * @property {function(SuperCard)} create Create Session Token.
- */
-
-/**
- * @typedef {Object} CRUD
- * @property {Function} [list] List item.
- * @property {Function} [create] Create item.
- * @property {Function} [read] Read item.
- * @property {Function} [update] Update item.
- * @property {Function} [delete] Delete item.
- */
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
 
-/**
- * @typedef {Object} GatewayBackend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {CRUD} subscription Payment Related Functions.
- * @property {Session} [session] Session Related Functions.
- */
-
-/**
- * @typedef {Object} GatewayBackendSettings
- * @property {string} [gateway] Gateway name property from SuperPay.SUPPORTED_GATEWAYS.
- * @property {string} [api_token] API Token: Required for most gateways.
- * @property {string} [api_email] API Email: Required for few gateways.
- */
-
-/**
- * @typedef {Object} GatewayFrontend
- * @property {Card} card Card Related Functions.
- * @property {Payment} payment Payment Related Functions.
- * @property {CRUD} subscription Payment Related Functions.
- * @property {Session} [session] Session Related Functions.
- */
-
-/**
- * @typedef {Object} GatewayFrontendSettings
- * @property {string} [server_url] Application server address.
- */```
+   [dill]: <https://github.com/joemccann/dillinger>

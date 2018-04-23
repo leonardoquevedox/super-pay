@@ -13,6 +13,7 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 let randomstring = require("randomstring");
+let moment = require("moment");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");
@@ -26,9 +27,44 @@ let Subscription = module.exports = {
         config = Config.init(options);
         return Subscription;
     },
-    createPlan: plan => {
+    listPlans: () => {
         return new Promise((() => {
             var _ref = _asyncToGenerator(function* (resolve, reject) {
+                try {
+                    let credentials = Config.getCredentials();
+                    let startDate = moment(new Date(1990, 10, 10));
+                    let endDate = moment();
+                    let params = {
+                        status: "INITIATED",
+                        maxPageResults: 100,
+                        startCreationDate: startDate.format(),
+                        endCreationDate: endDate.format()
+                    };
+                    console.log(params);
+                    let plans_url = `${config.gateway_url}/pre-approvals/request`;
+                    let query = Object.assign(credentials, params);
+                    let url = plans_url + `?${querystring.stringify(query)}`;
+                    let response = (yield axios.get(url, {
+                        headers: {
+                            "Content-Type": "application/xml; charset=ISO-8859-1",
+                            "Accept": " application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1"
+                        }
+                    })).data;
+                    let token = xmlJS.xml2js(response, { compact: true }).session.id._text;
+                    resolve(token);
+                } catch (e) {
+                    ErrorUtils.handle(reject, e);
+                }
+            });
+
+            return function (_x, _x2) {
+                return _ref.apply(this, arguments);
+            };
+        })());
+    },
+    createPlan: plan => {
+        return new Promise((() => {
+            var _ref2 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let credentials = Config.getCredentials();
                     if (plan.expiration) plan.expiration.value = parseInt(plan.expiration.split(" ")[0]);
@@ -71,14 +107,14 @@ let Subscription = module.exports = {
                 }
             });
 
-            return function (_x, _x2) {
-                return _ref.apply(this, arguments);
+            return function (_x3, _x4) {
+                return _ref2.apply(this, arguments);
             };
         })());
     },
     subscribe: subscription => {
         return new Promise((() => {
-            var _ref2 = _asyncToGenerator(function* (resolve, reject) {
+            var _ref3 = _asyncToGenerator(function* (resolve, reject) {
                 try {
                     let created = yield PaymentCtrl.create(PaymentCtrl.SUBSCRIPTION, subscription);
                     resolve({ id: created.directPreApproval.code._text });
@@ -87,8 +123,8 @@ let Subscription = module.exports = {
                 }
             });
 
-            return function (_x3, _x4) {
-                return _ref2.apply(this, arguments);
+            return function (_x5, _x6) {
+                return _ref3.apply(this, arguments);
             };
         })());
     }

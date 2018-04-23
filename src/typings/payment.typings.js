@@ -11,6 +11,7 @@
  * @property {SuperOrder} [order] Order information.
  * @property {string} [country] Country Code (Two letters).
  * @property {string} [currency] Payment currency code (Three letters).
+ * @property {object} [payload] Payload for custom optional data.
  * @property {string} [ip] Buyer IP address.
  */
 

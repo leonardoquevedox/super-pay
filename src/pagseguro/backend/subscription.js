@@ -9,6 +9,7 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 let randomstring = require("randomstring");
+let moment = require("moment");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");
@@ -21,6 +22,35 @@ let Subscription = module.exports = {
     init: (options) => {
         config = Config.init(options);
         return Subscription;
+    },
+    listPlans: () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let credentials = Config.getCredentials();
+                let startDate = moment(new Date(1990, 10, 10));
+                let endDate = moment();
+                let params = {
+                    status: "INITIATED",
+                    maxPageResults: 100,
+                    startCreationDate: startDate.format(),
+                    endCreationDate: endDate.format()
+                };
+                console.log(params);
+                let plans_url = `${config.gateway_url}/pre-approvals/request`;
+                let query = Object.assign(credentials, params);
+                let url = plans_url + `?${querystring.stringify(query)}`;
+                let response = (await axios.get(url, {
+                    headers: {
+                        "Content-Type": "application/xml; charset=ISO-8859-1",
+                        "Accept": " application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1",
+                    }
+                })).data;
+                let token = xmlJS.xml2js(response, { compact: true }).session.id._text;
+                resolve(token);
+            } catch (e) {
+                ErrorUtils.handle(reject, e);
+            }
+        });
     },
     createPlan: (plan) => {
         return new Promise(async (resolve, reject) => {

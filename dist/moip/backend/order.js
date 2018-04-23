@@ -53,7 +53,7 @@ let Order = module.exports = {
                     transaction.order.shipping = transaction.order.shipping || 0;
                     if (transaction.receivers) {
                         transaction.receivers.map(function (receiver, index) {
-                            let amount = receiver.fee || transaction.amount * (receiver.percentage * 100);
+                            let amount = receiver.fee || transaction.amount * (receiver.percentage / 100);
                             transaction.receivers[index] = {
                                 "moipAccount": {
                                     "id": receiver.id
