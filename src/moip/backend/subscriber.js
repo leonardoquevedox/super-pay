@@ -39,7 +39,7 @@ let Subscriber = module.exports = {
                     fullname: subscriber.name,
                     email: subscriber.email,
                     phone_area_code: phone ? phone.substring(0, 2) : undefined,
-                    phone_number: phone ? phone.substring(2, phone.length - 1) : undefined,
+                    phone_number: phone ? phone.substring(2, phone.length) : undefined,
                     birthdate_day: birthDate.substring(0, 2),
                     birthdate_month: birthDate.substring(3, 5),
                     birthdate_year: birthDate.substring(6, 10),

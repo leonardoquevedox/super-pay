@@ -49,7 +49,7 @@ let Payment = module.exports = {
                             hash: transaction.buyer.hash,
                             phone: {
                                 areaCode: phone ? phone.substring(0, 2) : undefined,
-                                number: phone ? phone.substring(2, phone.length - 1) : undefined
+                                number: phone ? phone.substring(2, phone.length) : undefined
                             },
                             email: transaction.buyer.email,
                             name: transaction.buyer.name,
@@ -78,7 +78,7 @@ let Payment = module.exports = {
                             holder: {
                                 phone: {
                                     areaCode: phone ? phone.substring(0, 2) : undefined,
-                                    number: phone ? phone.substring(2, phone.length - 1) : undefined
+                                    number: phone ? phone.substring(2, phone.length) : undefined
                                 },
                                 email: transaction.instrument.holder.email,
                                 name: transaction.instrument.holder.name,

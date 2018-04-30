@@ -62,7 +62,7 @@ let Card = module.exports = {
                                 phone: {
                                     countryCode: "55",
                                     areaCode: phone ? phone.substring(0, 2) : undefined,
-                                    number: phone ? phone.substring(2, phone.length - 1) : undefined
+                                    number: phone ? phone.substring(2, phone.length) : undefined
                                 },
                                 taxDocument: {
                                     type: card.holder.document.type,
