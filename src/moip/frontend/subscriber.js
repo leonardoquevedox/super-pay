@@ -7,7 +7,7 @@
 let Promise = require("bluebird");
 let querystring = require("querystring");
 let axios = require("axios");
-let moment = require("moment");
+let moment = require("moment-mini");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");

@@ -13,7 +13,7 @@ let axios = require("axios");
 let xmlJS = require("xml-js");
 let Promise = require("bluebird");
 let randomstring = require("randomstring");
-let moment = require("moment");
+let moment = require("moment-mini");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");

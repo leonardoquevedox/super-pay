@@ -43,8 +43,7 @@ let Merchant = module.exports = {
                     transparentAccount: false,
                     email: { address: merchant.email },
                     person: {
-                        name: merchant.name.split(" ")[0],
-                        lastName: merchant.name.split(" ")[0],
+                        name: merchant.name,
                         birthDate: birthDate,
                         phone: {
                             countryCode: "55",
@@ -63,7 +62,7 @@ let Merchant = module.exports = {
                             city: merchant.address.city,
                             state: merchant.address.state,
                             country: merchant.address.country,
-                            zipCode: merchant.address.postalCode ? merchant.address.postalCode.replace(/[^\d]/g, "") : undefined,
+                            zipcode: merchant.address.postalCode
                         }
                     }
                 };

@@ -1,6 +1,6 @@
 {
   "name": "super-pay",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "description": "Brazillian multi-gateway payment library!",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,6 @@
     "jslint": "^0.12.0",
     "md5": "^2.2.1",
     "moip-sdk-node": "^1.1.0-beta",
-    "moment": "^2.21.0",
     "querystring": "^0.2.0",
     "randomstring": "^1.1.5",
     "xml-js": "^1.6.2"

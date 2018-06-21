@@ -11,7 +11,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 let Promise = require("bluebird");
 let querystring = require("querystring");
 let axios = require("axios");
-let moment = require("moment");
+let moment = require("moment-mini");
 
 /* Util modules */
 let ErrorUtils = require("../../utils/error.utils");

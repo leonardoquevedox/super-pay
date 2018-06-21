@@ -1,5 +1,5 @@
 /* External Dependencies */
-let moment = require("moment");
+let moment = require("moment-mini");
 let Promise = require("bluebird");
 let CardInfo = require("@polvo-labs/card-type");
 
